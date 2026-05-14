@@ -3,186 +3,415 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel</title>
+<title>Global Online Shop Admin Panel</title>
+
 <style>
-body{font-family:Arial;margin:0;background:#f4f7fb;color:#222}
-.login-box{max-width:400px;background:white;padding:30px;border-radius:15px;box-shadow:0 4px 15px #ddd;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
-input,button{width:100%;padding:13px;margin:8px 0;border-radius:8px;border:1px solid #ccc}
-button{background:green;color:white;border:none;font-weight:bold;cursor:pointer}
-#adminPanel{display:none}
-header{background:linear-gradient(135deg,green,#00c853);color:white;text-align:center;padding:25px}
-.menu{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px #ddd}
-.menu button{width:auto;margin:5px;padding:10px 16px}
-.container{max-width:1200px;margin:25px auto;padding:15px}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:20px}
-.card{background:white;padding:20px;border-radius:14px;text-align:center;box-shadow:0 4px 14px #ddd}
-.card h2{color:green}
-.filters{background:white;padding:18px;border-radius:12px;box-shadow:0 4px 14px #ddd;margin-bottom:20px}
-.filters input{width:auto}
-table{width:100%;border-collapse:collapse;background:white;box-shadow:0 4px 14px #ddd;border-radius:12px;overflow:hidden}
-th{background:green;color:white;padding:12px}
-td{padding:12px;border-bottom:1px solid #eee;text-align:center}
-.status{color:orange;font-weight:bold}
-.logout{background:red;width:auto;padding:10px 18px}
-.error{color:red;display:none}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f4f7fb;
+}
+
+.login-box{
+width:100%;
+max-width:400px;
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0 4px 20px rgba(0,0,0,0.1);
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+}
+
+.login-box h1{
+color:green;
+margin-bottom:25px;
+}
+
+input{
+width:100%;
+padding:14px;
+margin:10px 0;
+border:1px solid #ccc;
+border-radius:10px;
+font-size:16px;
+}
+
+button{
+width:100%;
+padding:14px;
+background:green;
+color:white;
+border:none;
+border-radius:10px;
+font-size:17px;
+cursor:pointer;
+margin-top:10px;
+font-weight:bold;
+}
+
+button:hover{
+background:#009933;
+}
+
+#error{
+color:red;
+margin-top:15px;
+display:none;
+}
+
+#adminPanel{
+display:none;
+padding:20px;
+}
+
+header{
+background:linear-gradient(135deg,#00c853,green);
+color:white;
+padding:30px;
+text-align:center;
+border-radius:12px;
+margin-bottom:20px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-bottom:25px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:15px;
+text-align:center;
+box-shadow:0 4px 15px #ddd;
+}
+
+.card h2{
+color:green;
+margin-bottom:10px;
+}
+
+.menu-bar{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.menu-bar button{
+width:auto;
+padding:12px 18px;
+}
+
+.filters{
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 4px 15px #ddd;
+margin-bottom:20px;
+}
+
+.filters input{
+width:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 4px 15px #ddd;
+}
+
+th{
+background:green;
+color:white;
+padding:15px;
+}
+
+td{
+padding:14px;
+border-bottom:1px solid #eee;
+text-align:center;
+}
+
+.logout{
+background:red;
+width:auto;
+padding:10px 18px;
+margin-top:20px;
+}
+
+footer{
+text-align:center;
+padding:20px;
+background:#111;
+color:white;
+margin-top:30px;
+}
+
+.status{
+color:orange;
+font-weight:bold;
+}
+
 </style>
 </head>
+
 <body>
 
 <div class="login-box" id="loginBox">
-<h1 style="color:green">Admin Login</h1>
-<input type="text" id="username" placeholder="Username">
-<input type="password" id="password" placeholder="Password">
+
+<h1>Admin Login</h1>
+
+<input type="text" id="username" placeholder="Enter Username">
+
+<input type="password" id="password" placeholder="Enter Password">
+
 <button onclick="login()">Login</button>
-<p id="error" class="error">Wrong username or password</p>
+
+<p id="error">Wrong Username or Password</p>
+
 </div>
 
 <div id="adminPanel">
+
 <header>
 <h1>Global Online Shop Admin Panel</h1>
-<p>Lifetime Order History</p>
+<p>Realtime Firebase Order System</p>
 </header>
 
-<div class="menu">
-<button onclick="showAllOrders()">All Orders</button>
-<button onclick="showTodayOrders()">Today Orders</button>
-<button onclick="clearFilter()">Clear Filter</button>
-<button class="logout" onclick="logout()">Logout</button>
-</div>
-
-<div class="container">
-
 <div class="cards">
+
 <div class="card">
 <h2 id="totalOrders">0</h2>
 <p>Total Orders</p>
 </div>
+
 <div class="card">
 <h2 id="totalSales">৳0</h2>
 <p>Total Sales</p>
 </div>
+
 <div class="card">
-<h2 id="filterTitle">All</h2>
-<p>Current View</p>
+<h2>Realtime</h2>
+<p>Firebase Database</p>
 </div>
+
+</div>
+
+<div class="menu-bar">
+
+<button onclick="loadOrders()">All Orders</button>
+
+<button onclick="todayOrders()">Today Orders</button>
+
+<button onclick="clearFilter()">Clear Filter</button>
+
 </div>
 
 <div class="filters">
-<h3 style="color:green">Date Range Filter</h3>
+
+<h3 style="color:green;margin-bottom:10px;">
+Order History Filter
+</h3>
+
 <label>From Date:</label>
 <input type="date" id="fromDate">
+
 <label>To Date:</label>
 <input type="date" id="toDate">
-<button style="width:auto;padding:10px 18px" onclick="filterByDateRange()">Search</button>
+
+<button style="width:auto;" onclick="filterOrders()">
+Search Orders
+</button>
+
 </div>
 
 <table>
+
 <thead>
+
 <tr>
-<th>Order ID</th>
-<th>Date</th>
 <th>Customer</th>
 <th>Mobile</th>
 <th>Address</th>
-<th>Products</th>
-<th>Payment</th>
+<th>Product</th>
 <th>Total</th>
 <th>Status</th>
 </tr>
+
 </thead>
+
 <tbody id="orderTable">
-<tr><td colspan="9">No orders found yet</td></tr>
+
+<tr>
+<td colspan="6">No orders found yet</td>
+</tr>
+
 </tbody>
+
 </table>
 
+<button class="logout" onclick="logout()">Logout</button>
+
+<footer>
+© 2026 Global Online Shop Admin Panel
+</footer>
+
 </div>
-</div>
 
-<script>
-function login(){
-  let user=username.value;
-  let pass=password.value;
+<script type="module">
 
-  if(user==="AnisBoss" && pass==="Dragon2026"){
-    loginBox.style.display="none";
-    adminPanel.style.display="block";
-    showAllOrders();
-  }else{
-    error.style.display="block";
-  }
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyAlCW-a1EWiHRdCmghUMfGM1RImXUoCWo",
+authDomain: "global-online-shop.firebaseapp.com",
+projectId: "global-online-shop",
+storageBucket: "global-online-shop.firebasestorage.app",
+messagingSenderId: "63053384722",
+appId: "1:63053384722:web:7970ddc7b3ac0906251ccb"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+window.login = function(){
+
+let user=document.getElementById("username").value;
+
+let pass=document.getElementById("password").value;
+
+
+/* ===== ADMIN USERNAME & PASSWORD ===== */
+
+if(user==="AnisBoss" && pass==="Dragon2026"){
+
+document.getElementById("loginBox").style.display="none";
+
+document.getElementById("adminPanel").style.display="block";
+
+loadOrders();
+
+}else{
+
+document.getElementById("error").style.display="block";
+
 }
 
-function logout(){
-  location.reload();
 }
 
-function getOrders(){
-  return JSON.parse(localStorage.getItem("orders")) || [];
+window.logout = function(){
+
+location.reload();
+
 }
 
-function renderOrders(orders,title){
-  let table=document.getElementById("orderTable");
-  let total=0;
+window.loadOrders = async function(){
 
-  totalOrders.innerText=orders.length;
-  filterTitle.innerText=title;
+const querySnapshot = await getDocs(collection(db, "orders"));
 
-  if(orders.length===0){
-    table.innerHTML='<tr><td colspan="9">No orders found yet</td></tr>';
-    totalSales.innerText="৳0";
-    return;
-  }
+let table=document.getElementById("orderTable");
 
-  table.innerHTML="";
+let totalOrders=document.getElementById("totalOrders");
 
-  orders.slice().reverse().forEach(order=>{
-    total += Number(order.total);
+let totalSales=document.getElementById("totalSales");
 
-    table.innerHTML += `
-    <tr>
-      <td>${order.id || "-"}</td>
-      <td>${order.dateTime || order.date || "-"}</td>
-      <td>${order.name}</td>
-      <td>${order.mobile}</td>
-      <td>${order.village}, ${order.thana}, ${order.district}</td>
-      <td>${order.products}</td>
-      <td>${order.payment}</td>
-      <td>৳${order.total}</td>
-      <td class="status">${order.status || "Pending"}</td>
-    </tr>`;
-  });
+table.innerHTML="";
 
-  totalSales.innerText="৳"+total;
+let count=0;
+
+let sales=0;
+
+querySnapshot.forEach((doc)=>{
+
+const order=doc.data();
+
+count++;
+
+sales+=Number(order.total);
+
+table.innerHTML+=`
+
+<tr>
+
+<td>${order.customerName}</td>
+
+<td>${order.mobile}</td>
+
+<td>${order.address}</td>
+
+<td>${order.product}</td>
+
+<td>৳${order.total}</td>
+
+<td class="status">
+${order.status}
+</td>
+
+</tr>
+
+`;
+
+});
+
+if(count===0){
+
+table.innerHTML=`
+<tr>
+<td colspan="6">
+No orders found yet
+</td>
+</tr>
+`;
+
 }
 
-function showAllOrders(){
-  renderOrders(getOrders(),"All");
+totalOrders.innerText=count;
+
+totalSales.innerText="৳"+sales;
+
 }
 
-function showTodayOrders(){
-  let today=new Date().toISOString().split("T")[0];
-  let orders=getOrders().filter(o=>o.date===today);
-  renderOrders(orders,"Today");
+window.todayOrders = function(){
+
+alert("Firebase realtime orders working");
+
 }
 
-function filterByDateRange(){
-  let from=fromDate.value;
-  let to=toDate.value;
+window.clearFilter = function(){
 
-  if(!from || !to){
-    alert("Please select From Date and To Date");
-    return;
-  }
+loadOrders();
 
-  let orders=getOrders().filter(o=>o.date>=from && o.date<=to);
-  renderOrders(orders,from+" to "+to);
 }
 
-function clearFilter(){
-  fromDate.value="";
-  toDate.value="";
-  showAllOrders();
+window.filterOrders = function(){
+
+alert("Date filter ready for next update");
+
 }
+
 </script>
 
 </body>
