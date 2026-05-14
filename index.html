@@ -185,24 +185,7 @@ footer{background:#111;color:white;text-align:center;padding:25px;margin-top:30p
 </div>
 </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-  getFirestore,
-  collection,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyA1CW-aCiEWiHRdCmghUMfGM1RImXUoCWo",
-  authDomain: "global-online-shop.firebaseapp.com",
-  projectId: "global-online-shop",
-  storageBucket: "global-online-shop.firebasestorage.app",
-  messagingSenderId: "63053384722",
-  appId: "1:63053384722:web:7970ddc7b3ac0906251ccb"
-};
-
+<script>
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const products=[
