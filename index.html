@@ -1,243 +1,384 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Global Online Shop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Online Shop</title>
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:Arial, sans-serif;
-    }
-
-    body{
-      background:#f5f5f5;
-    }
-
-    header{
-      background:#00b140;
-      color:white;
-      padding:20px;
-      text-align:center;
-      font-size:30px;
-      font-weight:bold;
-    }
-
-    .products{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-      gap:20px;
-      padding:20px;
-    }
-
-    .card{
-      background:white;
-      border-radius:10px;
-      padding:15px;
-      text-align:center;
-      box-shadow:0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    .card img{
-      width:100%;
-      height:200px;
-      object-fit:cover;
-      border-radius:10px;
-    }
-
-    .card h2{
-      margin:10px 0;
-    }
-
-    .price{
-      color:#00b140;
-      font-size:22px;
-      font-weight:bold;
-      margin:10px 0;
-    }
-
-    button{
-      background:#00b140;
-      color:white;
-      border:none;
-      padding:10px 20px;
-      border-radius:5px;
-      cursor:pointer;
-      margin-top:10px;
-    }
-
-    .popup{
-      position:fixed;
-      top:50%;
-      left:50%;
-      transform:translate(-50%,-50%);
-      background:white;
-      padding:25px;
-      width:350px;
-      border-radius:10px;
-      box-shadow:0 0 20px rgba(0,0,0,0.3);
-      display:none;
-      z-index:1000;
-    }
-
-    .popup input,
-    .popup textarea{
-      width:100%;
-      padding:10px;
-      margin-top:10px;
-      border:1px solid #ccc;
-      border-radius:5px;
-    }
-
-    .overlay{
-      position:fixed;
-      top:0;
-      left:0;
-      width:100%;
-      height:100%;
-      background:rgba(0,0,0,0.5);
-      display:none;
-    }
-
-    .success{
-      display:none;
-      position:fixed;
-      top:50%;
-      left:50%;
-      transform:translate(-50%,-50%);
-      background:white;
-      padding:25px;
-      border-radius:10px;
-      text-align:center;
-      z-index:2000;
-    }
-
-    .success h2{
-      color:#00b140;
-      margin-bottom:10px;
-    }
-  </style>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#f5f7fb;color:#222}
+body.dark{background:#111;color:#fff}
+header{background:linear-gradient(135deg,green,#00c853);color:white;text-align:center;padding:35px 15px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:15px 30px;background:white;box-shadow:0 2px 10px #ddd;position:sticky;top:0;z-index:10}
+body.dark nav,body.dark .card,body.dark .modal-box{background:#222;box-shadow:none}
+nav a,nav button{margin:8px;color:green;text-decoration:none;border:none;background:none;font-weight:bold;cursor:pointer}
+.btn,.login-btn{display:inline-block;background:green;color:white!important;padding:10px 18px;border-radius:8px;text-decoration:none;border:none;cursor:pointer;margin:6px}
+.hero{text-align:center;padding:55px 20px}
+.hero h2{font-size:40px;color:green;margin-bottom:15px}
+.section{padding:40px 20px;text-align:center}
+.controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:25px}
+input,select{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;margin:6px 0}
+.controls input,.controls select{width:auto}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px;max-width:1200px;margin:auto}
+.card{background:white;padding:18px;border-radius:15px;box-shadow:0 4px 15px #ddd;transition:.3s}
+.card:hover{transform:translateY(-8px)}
+.card img{width:100%;height:180px;object-fit:cover;border-radius:12px}
+.price{color:green;font-size:22px;font-weight:bold;margin:10px}
+.rating{color:#f5a623;font-size:18px;margin:5px}
+footer{background:#111;color:white;text-align:center;padding:25px;margin-top:30px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:999;justify-content:center;align-items:center;padding:20px}
+.modal-box{background:white;max-width:470px;width:100%;max-height:90vh;overflow:auto;padding:25px;border-radius:15px;text-align:center;position:relative}
+.close{position:absolute;right:15px;top:10px;font-size:28px;cursor:pointer;color:red}
+.cart-item{border-bottom:1px solid #ddd;padding:10px 0;text-align:left}
+.notice{position:fixed;top:80px;right:20px;background:green;color:white;padding:12px 18px;border-radius:8px;display:none;z-index:1000}
+.whatsapp-float{position:fixed;right:20px;bottom:20px;background:#25D366;color:white;padding:15px;border-radius:50%;font-size:24px;text-decoration:none;z-index:20}
+@media(max-width:700px){nav{flex-direction:column}.hero h2{font-size:30px}.controls input,.controls select{width:100%}}
+</style>
 </head>
+
 <body>
 
+<div id="notice" class="notice">Added successfully ✅</div>
+
 <header>
-  Global Online Shop
+<h1>Global Online Shop</h1>
+<p>Your trusted online business website</p>
 </header>
 
-<div class="products">
+<nav>
+<div>
+<a href="#home">Home</a>
+<a href="#products">Products</a>
+<a href="#reviews">Reviews</a>
+<a href="#contact">Contact</a>
+<button onclick="darkMode()">🌙 Dark Mode</button>
+</div>
+<div>
+<button class="login-btn" onclick="openLogin()">Login / Signup</button>
+<button class="login-btn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
+</div>
+</nav>
 
-  <div class="card">
-    <img src="https://picsum.photos/300/200?1">
-    <h2>Smart Watch</h2>
-    <div class="price">৳1200</div>
-    <button onclick="buyNow('Smart Watch',1200)">Buy Now</button>
-  </div>
+<section id="home" class="hero">
+<h2>Welcome To Global Online Shop</h2>
+<p>Search products, add to cart and checkout with delivery address.</p>
+<a class="btn" href="#products">Shop Now</a>
+</section>
 
-  <div class="card">
-    <img src="https://picsum.photos/300/200?2">
-    <h2>Wireless Mouse</h2>
-    <div class="price">৳650</div>
-    <button onclick="buyNow('Wireless Mouse',650)">Buy Now</button>
-  </div>
+<section id="products" class="section">
+<h2>Our Products</h2><br>
 
-  <div class="card">
-    <img src="https://picsum.photos/300/200?3">
-    <h2>Keyboard</h2>
-    <div class="price">৳1500</div>
-    <button onclick="buyNow('Keyboard',1500)">Buy Now</button>
-  </div>
+<div class="controls">
+<input type="text" id="searchInput" placeholder="Search product..." onkeyup="showProducts()">
 
+<select id="categoryFilter" onchange="showProducts()">
+<option value="All">All Categories</option>
+<option>Mobile</option>
+<option>Electronics</option>
+<option>Fashion</option>
+<option>Computer</option>
+<option>Laptop</option>
+<option>Watch</option>
+<option>Headphone</option>
+<option>Camera</option>
+<option>Gaming</option>
+</select>
 </div>
 
-<div class="overlay" id="overlay"></div>
+<div class="products" id="productList"></div>
+</section>
 
-<div class="popup" id="popup">
-  <h2>Order Now</h2>
+<section id="reviews" class="section">
+<h2>Customer Reviews</h2>
+<p>⭐⭐⭐⭐⭐ Very good service!</p>
+<p>⭐⭐⭐⭐⭐ Fast delivery and quality product.</p>
+<p>⭐⭐⭐⭐ Great online shop experience.</p>
+</section>
 
-  <input type="text" id="name" placeholder="Your Name">
-  <input type="text" id="mobile" placeholder="Mobile Number">
-  <textarea id="address" placeholder="Address"></textarea>
+<section id="contact" class="section">
+<h2>Contact Us</h2>
+<p>Phone: 01842602595</p>
+<p>Email: yourmail@gmail.com</p><br>
+<a class="btn" href="https://wa.me/8801842602595">WhatsApp Direct Chat</a>
+<a class="btn" href="YOUR_FACEBOOK_PAGE_LINK">Facebook Page</a>
+</section>
 
-  <button onclick="submitOrder()">Confirm Order</button>
+<footer>© 2026 Global Online Shop. All Rights Reserved.</footer>
+
+<a class="whatsapp-float" href="https://wa.me/8801842602595">💬</a>
+
+<div id="detailsModal" class="modal">
+<div class="modal-box">
+<span class="close" onclick="closeDetails()">×</span>
+<img id="detailsImg" style="width:100%;height:210px;object-fit:cover;border-radius:12px">
+<h2 id="detailsName" style="color:green;margin:15px 0"></h2>
+<div id="detailsRating" class="rating"></div>
+<p id="detailsDesc"></p>
+<h3 id="detailsPrice" style="color:green;margin:15px"></h3>
+<button class="btn" onclick="buySelected()">Buy Now</button>
+<button class="btn" onclick="addSelectedToCart()">Add To Cart</button>
+</div>
 </div>
 
-<div class="success" id="success">
-  <h2>✔ ক্রয় সফল হয়েছে</h2>
-  <p>অর্ডারটি Admin Panel History তে Save হয়েছে</p>
+<div id="cartModal" class="modal">
+<div class="modal-box">
+<span class="close" onclick="closeCart()">×</span>
+<h2 style="color:green">My Cart</h2>
+<div id="cartItems"></div>
+<h3 id="cartTotal" style="color:green;margin-top:15px"></h3>
+<button class="btn" onclick="openCheckout()">Checkout Cart</button>
+</div>
 </div>
 
-<script type="module">
+<div id="checkoutModal" class="modal">
+<div class="modal-box">
+<span class="close" onclick="closeCheckout()">×</span>
+<h2 style="color:green">Delivery Address</h2>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+<input id="customerName" type="text" placeholder="Customer Name">
+<input id="village" type="text" placeholder="Village / Gram">
 
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+<select id="district">
+<option value="">Select District</option>
+<option>Dhaka</option><option>Gazipur</option><option>Narayanganj</option><option>Narsingdi</option>
+<option>Chattogram</option><option>Cox's Bazar</option><option>Cumilla</option><option>Noakhali</option>
+<option>Sylhet</option><option>Moulvibazar</option><option>Rajshahi</option><option>Rangpur</option>
+<option>Khulna</option><option>Jashore</option><option>Barishal</option><option>Mymensingh</option>
+<option>Faridpur</option><option>Gopalganj</option><option>Tangail</option><option>Kushtia</option>
+</select>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAlCW-a1EWiHRdCmghUMfGM1RImXUoCWo",
-  authDomain: "global-online-shop.firebaseapp.com",
-  projectId: "global-online-shop",
-  storageBucket: "global-online-shop.firebasestorage.app",
-  messagingSenderId: "63053384722",
-  appId: "1:63053384722:web:7970ddc7b3ac0906251ccb"
+<input id="thana" type="text" placeholder="Thana / Upazila">
+<input id="mobile" type="text" placeholder="Mobile Number">
+
+<select id="deliveryMethod">
+<option value="">Select Payment Method</option>
+<option>Visa / Debit Card</option>
+<option>bKash</option>
+<option>Nagad</option>
+<option>Rocket</option>
+<option>Cash on Delivery</option>
+</select>
+
+<button class="btn" onclick="confirmPurchase()">Confirm Purchase</button>
+</div>
+</div>
+
+<div id="successModal" class="modal">
+<div class="modal-box">
+<span class="close" onclick="closeSuccess()">×</span>
+<h1 style="color:green">✅ ক্রয় সফল হয়েছে</h1>
+<p>আপনার অর্ডার সফলভাবে গ্রহণ করা হয়েছে।</p>
+<p>অর্ডারটি Admin Panel history তে save হয়েছে।</p>
+<button class="btn" onclick="closeSuccess()">OK</button>
+</div>
+</div>
+
+<div id="loginModal" class="modal">
+<div class="modal-box">
+<span class="close" onclick="closeLogin()">×</span>
+<h2 style="color:green">Login / Signup</h2>
+<input type="text" placeholder="Mobile Number or Gmail">
+<input type="password" placeholder="Password">
+<button class="btn" onclick="alert('Demo Login Successful')">Login</button>
+<button class="btn" onclick="alert('Demo Signup Successful')">Signup</button>
+</div>
+</div>
+
+<script>
+const products=[
+{name:"Smart Phone",category:"Mobile",price:15000,rating:"⭐⭐⭐⭐⭐",desc:"Best quality smartphone with modern features.",img:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"},
+{name:"Headphone",category:"Headphone",price:1200,rating:"⭐⭐⭐⭐⭐",desc:"High quality sound headphone for music.",img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e"},
+{name:"Smart Watch",category:"Watch",price:2500,rating:"⭐⭐⭐⭐",desc:"Modern smart watch with stylish design.",img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30"},
+{name:"T-Shirt",category:"Fashion",price:650,rating:"⭐⭐⭐⭐",desc:"Comfortable and stylish fashion t-shirt.",img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"},
+{name:"Laptop",category:"Laptop",price:55000,rating:"⭐⭐⭐⭐⭐",desc:"Powerful laptop for work and study.",img:"https://images.unsplash.com/photo-1496181133206-80ce9b88a853"},
+{name:"Camera",category:"Camera",price:32000,rating:"⭐⭐⭐⭐",desc:"HD camera for photography.",img:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32"},
+{name:"Gaming Mouse",category:"Gaming",price:900,rating:"⭐⭐⭐⭐⭐",desc:"RGB gaming mouse.",img:"https://images.unsplash.com/photo-1527814050087-3793815479db"},
+{name:"Keyboard",category:"Computer",price:1500,rating:"⭐⭐⭐⭐",desc:"Mechanical style keyboard.",img:"https://images.unsplash.com/photo-1587829741301-dc798b83add3"}
+];
+
+let selectedProduct=null;
+let cart=[];
+
+function showProducts(){
+let list=document.getElementById("productList");
+let search=document.getElementById("searchInput").value.toLowerCase();
+let category=document.getElementById("categoryFilter").value;
+list.innerHTML="";
+
+products.filter(p=>p.name.toLowerCase().includes(search)&&(category==="All"||p.category===category)).forEach((p,i)=>{
+list.innerHTML+=`
+<div class="card">
+<img src="${p.img}">
+<h3>${p.name}</h3>
+<p>${p.category}</p>
+<div class="rating">${p.rating}</div>
+<p class="price">৳${p.price}</p>
+<button class="btn" onclick="openDetails(${i})">Details</button>
+<button class="btn" onclick="addToCart(${i})">Add Cart</button>
+<button class="btn" onclick="openBuyDirect(${i})">Buy Now</button>
+</div>`;
+});
+}
+
+function openDetails(i){
+selectedProduct=products[i];
+detailsImg.src=selectedProduct.img;
+detailsName.innerText=selectedProduct.name;
+detailsDesc.innerText=selectedProduct.desc;
+detailsPrice.innerText="৳"+selectedProduct.price;
+detailsRating.innerText=selectedProduct.rating;
+detailsModal.style.display="flex";
+}
+
+function closeDetails(){detailsModal.style.display="none"}
+
+function addToCart(i){
+cart.push(products[i]);
+updateCart();
+notify();
+}
+
+function addSelectedToCart(){
+cart.push(selectedProduct);
+updateCart();
+notify();
+}
+
+function updateCart(){
+cartCount.innerText=cart.length;
+}
+
+function notify(){
+notice.style.display="block";
+setTimeout(()=>notice.style.display="none",1500);
+}
+
+function openCart(){
+cartItems.innerHTML="";
+let total=0;
+
+if(cart.length===0){
+cartItems.innerHTML="<p>Your cart is empty.</p>";
+}
+
+cart.forEach((item,i)=>{
+total+=item.price;
+cartItems.innerHTML+=`
+<div class="cart-item">
+<b>${item.name}</b><br>
+৳${item.price}<br>
+<button class="btn" onclick="removeCart(${i})">Remove</button>
+</div>`;
+});
+
+cartTotal.innerText="Total: ৳"+total;
+cartModal.style.display="flex";
+}
+
+function closeCart(){cartModal.style.display="none"}
+
+function removeCart(i){
+cart.splice(i,1);
+updateCart();
+openCart();
+}
+
+function openBuyDirect(i){
+cart=[products[i]];
+updateCart();
+openCheckout();
+}
+
+function buySelected(){
+cart=[selectedProduct];
+updateCart();
+closeDetails();
+openCheckout();
+}
+
+function openCheckout(){
+if(cart.length===0){
+alert("Cart is empty");
+return;
+}
+cartModal.style.display="none";
+checkoutModal.style.display="flex";
+}
+
+function closeCheckout(){checkoutModal.style.display="none"}
+
+function confirmPurchase(){
+let name=customerName.value;
+let gram=village.value;
+let dis=district.value;
+let tha=thana.value;
+let mob=mobile.value;
+let pay=deliveryMethod.value;
+
+if(!name||!gram||!dis||!tha||!mob||!pay){
+alert("Please fill all address and payment fields");
+return;
+}
+
+let now=new Date();
+let orderDate=now.toISOString().split("T")[0];
+let orderTime=now.toLocaleTimeString();
+let orderDateTime=now.toLocaleString();
+
+let total=cart.reduce((sum,item)=>sum+item.price,0);
+let productText=cart.map(item=>item.name+" ৳"+item.price).join(", ");
+
+let order={
+id:"ORD-"+Date.now(),
+name:name,
+mobile:mob,
+village:gram,
+district:dis,
+thana:tha,
+payment:pay,
+products:productText,
+total:total,
+status:"Pending",
+date:orderDate,
+time:orderTime,
+dateTime:orderDateTime
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+let orders=JSON.parse(localStorage.getItem("orders")) || [];
+orders.push(order);
+localStorage.setItem("orders", JSON.stringify(orders));
 
-let currentProduct = "";
-let currentPrice = 0;
+let msg=`New Order:%0AOrder ID: ${order.id}%0ADate: ${orderDateTime}%0AName: ${name}%0AVillage: ${gram}%0ADistrict: ${dis}%0AThana: ${tha}%0AMobile: ${mob}%0APayment: ${pay}%0A%0AProducts:%0A`;
 
-window.buyNow = function(product,price){
-  currentProduct = product;
-  currentPrice = price;
+cart.forEach(item=>{
+msg+=`- ${item.name} ৳${item.price}%0A`;
+});
 
-  document.getElementById("popup").style.display="block";
-  document.getElementById("overlay").style.display="block";
+msg+=`%0ATotal: ৳${total}`;
+
+window.open("https://wa.me/8801842602595?text="+msg,"_blank");
+
+cart=[];
+updateCart();
+checkoutModal.style.display="none";
+successModal.style.display="flex";
+
+customerName.value="";
+village.value="";
+district.value="";
+thana.value="";
+mobile.value="";
+deliveryMethod.value="";
 }
 
-window.submitOrder = async function(){
+function closeSuccess(){successModal.style.display="none"}
 
-  const name = document.getElementById("name").value;
-  const mobile = document.getElementById("mobile").value;
-  const address = document.getElementById("address").value;
+function darkMode(){document.body.classList.toggle("dark")}
+function openLogin(){loginModal.style.display="flex"}
+function closeLogin(){loginModal.style.display="none"}
 
-  if(name==="" || mobile==="" || address===""){
-    alert("সব তথ্য পূরণ করুন");
-    return;
-  }
-
-  await addDoc(collection(db,"orders"),{
-    customerName:name,
-    mobile:mobile,
-    address:address,
-    product:currentProduct,
-    total:currentPrice,
-    status:"Pending",
-    createdAt:serverTimestamp()
-  });
-
-  document.getElementById("popup").style.display="none";
-  document.getElementById("overlay").style.display="none";
-
-  document.getElementById("success").style.display="block";
-
-  setTimeout(()=>{
-    document.getElementById("success").style.display="none";
-  },3000);
-
-  document.getElementById("name").value="";
-  document.getElementById("mobile").value="";
-  document.getElementById("address").value="";
-}
-
+showProducts();
 </script>
 
 </body>
