@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Global Online Shop</title>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#f5f7fb;color:#222}
@@ -35,12 +36,16 @@ footer{background:#111;color:white;text-align:center;padding:25px;margin-top:30p
 @media(max-width:700px){nav{flex-direction:column}.hero h2{font-size:30px}.controls input,.controls select{width:100%}}
 </style>
 </head>
+
 <body>
+
 <div id="notice" class="notice">Added successfully ✅</div>
+
 <header>
 <h1>Global Online Shop</h1>
 <p>Your trusted online business website</p>
 </header>
+
 <nav>
 <div>
 <a href="#home">Home</a>
@@ -54,15 +59,19 @@ footer{background:#111;color:white;text-align:center;padding:25px;margin-top:30p
 <button class="login-btn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
 </div>
 </nav>
+
 <section id="home" class="hero">
 <h2>Welcome To Global Online Shop</h2>
 <p>Search products, add to cart and checkout with delivery address.</p>
 <a class="btn" href="#products">Shop Now</a>
 </section>
+
 <section id="products" class="section">
 <h2>Our Products</h2><br>
+
 <div class="controls">
 <input type="text" id="searchInput" placeholder="Search product..." onkeyup="showProducts()">
+
 <select id="categoryFilter" onchange="showProducts()">
 <option value="All">All Categories</option>
 <option>Mobile</option>
@@ -76,14 +85,17 @@ footer{background:#111;color:white;text-align:center;padding:25px;margin-top:30p
 <option>Gaming</option>
 </select>
 </div>
+
 <div class="products" id="productList"></div>
 </section>
+
 <section id="reviews" class="section">
 <h2>Customer Reviews</h2>
 <p>⭐⭐⭐⭐⭐ Very good service!</p>
 <p>⭐⭐⭐⭐⭐ Fast delivery and quality product.</p>
 <p>⭐⭐⭐⭐ Great online shop experience.</p>
 </section>
+
 <section id="contact" class="section">
 <h2>Contact Us</h2>
 <p>Phone: 01842602595</p>
@@ -174,8 +186,6 @@ footer{background:#111;color:white;text-align:center;padding:25px;margin-top:30p
 </div>
 
 <script>
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 const products=[
 {name:"Smart Phone",category:"Mobile",price:15000,rating:"⭐⭐⭐⭐⭐",desc:"Best quality smartphone with modern features.",img:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"},
 {name:"Headphone",category:"Headphone",price:1200,rating:"⭐⭐⭐⭐⭐",desc:"High quality sound headphone for music.",img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e"},
