@@ -7,36 +7,31 @@
 
   <style>
     *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-    body{background:#f5f5f5;color:#222}
+    body{background:#f5f7fb;color:#222}
     body.dark{background:#111;color:white}
-    header{background:linear-gradient(135deg,green,#00c853);color:white;text-align:center;padding:40px 20px}
+    header{background:linear-gradient(135deg,green,#00c853);color:white;text-align:center;padding:35px 15px}
     nav{display:flex;justify-content:space-between;align-items:center;padding:15px 30px;background:white;box-shadow:0 2px 10px #ddd;position:sticky;top:0;z-index:10}
     body.dark nav,body.dark .card,body.dark .modal-box{background:#222;box-shadow:none}
     nav a,nav button{margin:8px;color:green;text-decoration:none;border:none;background:none;font-weight:bold;cursor:pointer}
-    .login-btn{background:green!important;color:white!important;padding:10px 20px;border-radius:8px}
-    .hero{text-align:center;padding:70px 20px}
-    .hero h2{font-size:42px;color:green;margin-bottom:15px}
-    .btn{display:inline-block;background:green;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;border:none;cursor:pointer;margin:8px}
-    .section{padding:45px 20px;text-align:center}
-    .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:25px;max-width:1100px;margin:auto}
+    .login-btn{background:green!important;color:white!important;padding:10px 18px;border-radius:8px}
+    .hero{text-align:center;padding:55px 20px}
+    .hero h2{font-size:40px;color:green;margin-bottom:15px}
+    .btn{display:inline-block;background:green;color:white;padding:11px 20px;border-radius:8px;text-decoration:none;border:none;cursor:pointer;margin:6px}
+    .section{padding:40px 20px;text-align:center}
+    .controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:25px}
+    input,select{padding:12px;border:1px solid #ccc;border-radius:8px}
+    .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px;max-width:1100px;margin:auto}
     .card{background:white;padding:18px;border-radius:15px;box-shadow:0 4px 15px #ddd}
     .card img{width:100%;height:180px;object-fit:cover;border-radius:12px}
     .price{color:green;font-size:22px;font-weight:bold;margin:10px}
-    footer{background:#111;color:white;text-align:center;padding:25px}
+    footer{background:#111;color:white;text-align:center;padding:25px;margin-top:30px}
 
-    .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999;justify-content:center;align-items:center;padding:20px}
+    .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:999;justify-content:center;align-items:center;padding:20px}
     .modal-box{background:white;max-width:430px;width:100%;padding:25px;border-radius:15px;text-align:center;position:relative}
     .close{position:absolute;right:15px;top:10px;font-size:28px;cursor:pointer;color:red}
-    input{width:100%;padding:13px;margin:8px 0;border:1px solid #ccc;border-radius:8px}
-    .tabs{display:flex;gap:10px;justify-content:center;margin-bottom:18px}
-    .tab-btn{padding:10px 20px;border:none;border-radius:8px;cursor:pointer;font-weight:bold}
-    .tab-active{background:green;color:white}
-    .hidden{display:none}
-
-    @media(max-width:700px){
-      nav{flex-direction:column}
-      .hero h2{font-size:32px}
-    }
+    .cart-box{text-align:left;margin-top:15px}
+    .cart-item{border-bottom:1px solid #ddd;padding:10px 0}
+    @media(max-width:700px){nav{flex-direction:column}.hero h2{font-size:30px}}
   </style>
 </head>
 
@@ -54,49 +49,32 @@
     <a href="#contact">Contact</a>
     <button onclick="darkMode()">🌙 Dark Mode</button>
   </div>
-
-  <button class="login-btn" onclick="openLogin()">Login / Signup</button>
+  <div>
+    <button class="login-btn" onclick="openLogin()">Login / Signup</button>
+    <button class="login-btn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
+  </div>
 </nav>
 
 <section id="home" class="hero">
   <h2>Welcome To Global Online Shop</h2>
-  <p>Quality products, trusted service, fast communication.</p>
+  <p>Search products, view details, add to cart and order by WhatsApp.</p>
   <a class="btn" href="#products">Shop Now</a>
 </section>
 
 <section id="products" class="section">
-  <h2>Our Products</h2><br>
+  <h2>Our Products</h2>
 
-  <div class="products">
-
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9">
-      <h3>Smart Phone</h3>
-      <p>Best quality smartphone.</p>
-      <p class="price">৳15,000</p>
-      <a class="btn" href="#">Buy Now</a>
-      <a class="btn" href="https://wa.me/8801XXXXXXXXX?text=I want to buy Smart Phone">WhatsApp</a>
-    </div>
-
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e">
-      <h3>Headphone</h3>
-      <p>High quality sound.</p>
-      <p class="price">৳1,200</p>
-      <a class="btn" href="#">Buy Now</a>
-      <a class="btn" href="https://wa.me/8801XXXXXXXXX?text=I want to buy Headphone">WhatsApp</a>
-    </div>
-
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30">
-      <h3>Smart Watch</h3>
-      <p>Modern smart watch.</p>
-      <p class="price">৳2,500</p>
-      <a class="btn" href="#">Buy Now</a>
-      <a class="btn" href="https://wa.me/8801XXXXXXXXX?text=I want to buy Smart Watch">WhatsApp</a>
-    </div>
-
+  <div class="controls">
+    <input type="text" id="searchInput" placeholder="Search product..." onkeyup="showProducts()">
+    <select id="categoryFilter" onchange="showProducts()">
+      <option value="All">All Categories</option>
+      <option value="Mobile">Mobile</option>
+      <option value="Electronics">Electronics</option>
+      <option value="Fashion">Fashion</option>
+    </select>
   </div>
+
+  <div class="products" id="productList"></div>
 </section>
 
 <section id="contact" class="section">
@@ -112,79 +90,213 @@
   © 2026 Global Online Shop. All Rights Reserved.
 </footer>
 
+<div id="detailsModal" class="modal">
+  <div class="modal-box">
+    <span class="close" onclick="closeDetails()">×</span>
+    <img id="detailsImg" style="width:100%;height:200px;object-fit:cover;border-radius:12px">
+    <h2 id="detailsName" style="color:green;margin:15px 0"></h2>
+    <p id="detailsDesc"></p>
+    <h3 id="detailsPrice" style="color:green;margin:15px"></h3>
+    <button class="btn" onclick="buySelected()">Buy Now</button>
+    <button class="btn" onclick="addSelectedToCart()">Add To Cart</button>
+  </div>
+</div>
+
+<div id="buyModal" class="modal">
+  <div class="modal-box">
+    <span class="close" onclick="closeBuy()">×</span>
+    <h2 style="color:green">Place Order</h2>
+    <input id="buyerName" type="text" placeholder="Your Name">
+    <input id="buyerPhone" type="text" placeholder="Mobile Number">
+    <input id="buyerAddress" type="text" placeholder="Delivery Address">
+    <button class="btn" onclick="sendWhatsAppOrder()">Order by WhatsApp</button>
+  </div>
+</div>
+
+<div id="cartModal" class="modal">
+  <div class="modal-box">
+    <span class="close" onclick="closeCart()">×</span>
+    <h2 style="color:green">My Cart</h2>
+    <div id="cartItems" class="cart-box"></div>
+    <h3 id="cartTotal" style="color:green;margin-top:15px"></h3>
+    <button class="btn" onclick="orderCart()">Order Cart</button>
+  </div>
+</div>
+
 <div id="loginModal" class="modal">
   <div class="modal-box">
     <span class="close" onclick="closeLogin()">×</span>
-
-    <h2 style="color:green;margin-bottom:15px;">Account</h2>
-
-    <div class="tabs">
-      <button id="loginTab" class="tab-btn tab-active" onclick="showLogin()">Login</button>
-      <button id="signupTab" class="tab-btn" onclick="showSignup()">Signup</button>
-    </div>
-
-    <div id="loginForm">
-      <input type="text" placeholder="Mobile Number or Gmail">
-      <input type="password" placeholder="Password">
-      <button class="btn" onclick="alert('Demo Login Successful')">Login</button>
-    </div>
-
-    <div id="signupForm" class="hidden">
-      <input type="text" placeholder="Your Name">
-      <input type="text" placeholder="Mobile Number or Gmail">
-      <input type="password" id="signupPassword" placeholder="Password">
-      <input type="password" id="confirmPassword" placeholder="Confirm Password">
-
-      <button class="btn" onclick="signupNow()">Signup</button>
-
-      <div id="verifyBox" class="hidden" style="margin-top:15px;">
-        <input type="text" placeholder="Enter Verification Code">
-        <button class="btn" onclick="alert('Demo Verified Successfully')">Verify</button>
-      </div>
-    </div>
-
+    <h2 style="color:green">Login / Signup</h2>
+    <input type="text" placeholder="Mobile Number or Gmail">
+    <input type="password" placeholder="Password">
+    <button class="btn" onclick="alert('Demo Login Successful')">Login</button>
+    <button class="btn" onclick="alert('Demo Signup Successful')">Signup</button>
   </div>
 </div>
 
 <script>
-  function darkMode(){
-    document.body.classList.toggle("dark");
+  const products = [
+    {
+      name:"Smart Phone",
+      category:"Mobile",
+      price:15000,
+      desc:"Best quality smartphone with modern features.",
+      img:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"
+    },
+    {
+      name:"Headphone",
+      category:"Electronics",
+      price:1200,
+      desc:"High quality sound headphone for music and calls.",
+      img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e"
+    },
+    {
+      name:"Smart Watch",
+      category:"Electronics",
+      price:2500,
+      desc:"Modern smart watch with stylish design.",
+      img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30"
+    },
+    {
+      name:"Fashion T-Shirt",
+      category:"Fashion",
+      price:650,
+      desc:"Comfortable and stylish fashion t-shirt.",
+      img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"
+    }
+  ];
+
+  let selectedProduct = null;
+  let cart = [];
+
+  function showProducts(){
+    const list = document.getElementById("productList");
+    const search = document.getElementById("searchInput").value.toLowerCase();
+    const category = document.getElementById("categoryFilter").value;
+    list.innerHTML = "";
+
+    products.filter(p =>
+      p.name.toLowerCase().includes(search) &&
+      (category === "All" || p.category === category)
+    ).forEach((p, index) => {
+      list.innerHTML += `
+        <div class="card">
+          <img src="${p.img}">
+          <h3>${p.name}</h3>
+          <p>${p.category}</p>
+          <p class="price">৳${p.price}</p>
+          <button class="btn" onclick="openDetails(${index})">Details</button>
+          <button class="btn" onclick="addToCart(${index})">Add Cart</button>
+          <button class="btn" onclick="openBuy(${index})">Buy Now</button>
+        </div>
+      `;
+    });
   }
 
-  function openLogin(){
-    document.getElementById("loginModal").style.display = "flex";
+  function openDetails(index){
+    selectedProduct = products[index];
+    document.getElementById("detailsImg").src = selectedProduct.img;
+    document.getElementById("detailsName").innerText = selectedProduct.name;
+    document.getElementById("detailsDesc").innerText = selectedProduct.desc;
+    document.getElementById("detailsPrice").innerText = "৳" + selectedProduct.price;
+    document.getElementById("detailsModal").style.display = "flex";
   }
 
-  function closeLogin(){
-    document.getElementById("loginModal").style.display = "none";
+  function closeDetails(){document.getElementById("detailsModal").style.display="none"}
+
+  function openBuy(index){
+    selectedProduct = products[index];
+    document.getElementById("buyModal").style.display = "flex";
   }
 
-  function showLogin(){
-    document.getElementById("loginForm").classList.remove("hidden");
-    document.getElementById("signupForm").classList.add("hidden");
-    document.getElementById("loginTab").classList.add("tab-active");
-    document.getElementById("signupTab").classList.remove("tab-active");
+  function buySelected(){
+    closeDetails();
+    document.getElementById("buyModal").style.display = "flex";
   }
 
-  function showSignup(){
-    document.getElementById("signupForm").classList.remove("hidden");
-    document.getElementById("loginForm").classList.add("hidden");
-    document.getElementById("signupTab").classList.add("tab-active");
-    document.getElementById("loginTab").classList.remove("tab-active");
+  function closeBuy(){document.getElementById("buyModal").style.display="none"}
+
+  function addToCart(index){
+    cart.push(products[index]);
+    updateCartCount();
+    alert("Product added to cart");
   }
 
-  function signupNow(){
-    let password = document.getElementById("signupPassword").value;
-    let confirmPassword = document.getElementById("confirmPassword").value;
+  function addSelectedToCart(){
+    cart.push(selectedProduct);
+    updateCartCount();
+    alert("Product added to cart");
+  }
 
-    if(password !== confirmPassword){
-      alert("Password and Confirm Password do not match");
+  function updateCartCount(){
+    document.getElementById("cartCount").innerText = cart.length;
+  }
+
+  function openCart(){
+    const cartItems = document.getElementById("cartItems");
+    let total = 0;
+    cartItems.innerHTML = "";
+
+    if(cart.length === 0){
+      cartItems.innerHTML = "<p>Your cart is empty.</p>";
+    }
+
+    cart.forEach((item, i) => {
+      total += item.price;
+      cartItems.innerHTML += `
+        <div class="cart-item">
+          <b>${item.name}</b><br>
+          Price: ৳${item.price}
+          <button class="btn" onclick="removeCart(${i})">Remove</button>
+        </div>
+      `;
+    });
+
+    document.getElementById("cartTotal").innerText = "Total: ৳" + total;
+    document.getElementById("cartModal").style.display = "flex";
+  }
+
+  function closeCart(){document.getElementById("cartModal").style.display="none"}
+
+  function removeCart(index){
+    cart.splice(index,1);
+    updateCartCount();
+    openCart();
+  }
+
+  function orderCart(){
+    if(cart.length === 0){
+      alert("Cart is empty");
       return;
     }
 
-    alert("Demo verification code sent");
-    document.getElementById("verifyBox").classList.remove("hidden");
+    let msg = "I want to order:%0A";
+    cart.forEach(item => {
+      msg += "- " + item.name + " ৳" + item.price + "%0A";
+    });
+
+    window.open("https://wa.me/8801XXXXXXXXX?text=" + msg, "_blank");
   }
+
+  function sendWhatsAppOrder(){
+    let name = document.getElementById("buyerName").value;
+    let phone = document.getElementById("buyerPhone").value;
+    let address = document.getElementById("buyerAddress").value;
+
+    if(!name || !phone || !address){
+      alert("Please fill all fields");
+      return;
+    }
+
+    let msg = `Order Details:%0AProduct: ${selectedProduct.name}%0APrice: ৳${selectedProduct.price}%0AName: ${name}%0APhone: ${phone}%0AAddress: ${address}`;
+    window.open("https://wa.me/8801XXXXXXXXX?text=" + msg, "_blank");
+  }
+
+  function darkMode(){document.body.classList.toggle("dark")}
+  function openLogin(){document.getElementById("loginModal").style.display="flex"}
+  function closeLogin(){document.getElementById("loginModal").style.display="none"}
+
+  showProducts();
 </script>
 
 </body>
