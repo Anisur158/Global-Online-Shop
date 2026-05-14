@@ -169,7 +169,7 @@ footer{background:#111;color:white;text-align:center;padding:25px;margin-top:30p
 <span class="close" onclick="closeSuccess()">×</span>
 <h1 style="color:green">✅ ক্রয় সফল হয়েছে</h1>
 <p>আপনার অর্ডার সফলভাবে গ্রহণ করা হয়েছে।</p>
-<p>অর্ডারটি Admin Panel history তে save হয়েছে।</p>
+<p>অর্ডারটি Firebase + Admin Panel history তে save হয়েছে।</p>
 <button class="btn" onclick="closeSuccess()">OK</button>
 </div>
 </div>
@@ -180,12 +180,32 @@ footer{background:#111;color:white;text-align:center;padding:25px;margin-top:30p
 <h2 style="color:green">Login / Signup</h2>
 <input type="text" placeholder="Mobile Number or Gmail">
 <input type="password" placeholder="Password">
-<button class="btn" onclick="alert('Demo Login Successful')">Login</button>
-<button class="btn" onclick="alert('Demo Signup Successful')">Signup</button>
+<button class="btn" onclick="alert('Login system পরে Firebase Auth দিয়ে add করা যাবে')">Login</button>
+<button class="btn" onclick="alert('Signup system পরে Firebase Auth দিয়ে add করা যাবে')">Signup</button>
 </div>
 </div>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA1CW-aCiEWiHRdCmghUMfGM1RImXUoCWo",
+  authDomain: "global-online-shop.firebaseapp.com",
+  projectId: "global-online-shop",
+  storageBucket: "global-online-shop.firebasestorage.app",
+  messagingSenderId: "63053384722",
+  appId: "1:63053384722:web:7970ddc7b3ac0906251ccb"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 const products=[
 {name:"Smart Phone",category:"Mobile",price:15000,rating:"⭐⭐⭐⭐⭐",desc:"Best quality smartphone with modern features.",img:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"},
 {name:"Headphone",category:"Headphone",price:1200,rating:"⭐⭐⭐⭐⭐",desc:"High quality sound headphone for music.",img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e"},
@@ -200,7 +220,7 @@ const products=[
 let selectedProduct=null;
 let cart=[];
 
-function showProducts(){
+window.showProducts=function(){
 let list=document.getElementById("productList");
 let search=document.getElementById("searchInput").value.toLowerCase();
 let category=document.getElementById("categoryFilter").value;
@@ -221,7 +241,7 @@ list.innerHTML+=`
 });
 }
 
-function openDetails(i){
+window.openDetails=function(i){
 selectedProduct=products[i];
 detailsImg.src=selectedProduct.img;
 detailsName.innerText=selectedProduct.name;
@@ -231,15 +251,15 @@ detailsRating.innerText=selectedProduct.rating;
 detailsModal.style.display="flex";
 }
 
-function closeDetails(){detailsModal.style.display="none"}
+window.closeDetails=function(){detailsModal.style.display="none"}
 
-function addToCart(i){
+window.addToCart=function(i){
 cart.push(products[i]);
 updateCart();
 notify();
 }
 
-function addSelectedToCart(){
+window.addSelectedToCart=function(){
 cart.push(selectedProduct);
 updateCart();
 notify();
@@ -254,7 +274,7 @@ notice.style.display="block";
 setTimeout(()=>notice.style.display="none",1500);
 }
 
-function openCart(){
+window.openCart=function(){
 cartItems.innerHTML="";
 let total=0;
 
@@ -276,28 +296,28 @@ cartTotal.innerText="Total: ৳"+total;
 cartModal.style.display="flex";
 }
 
-function closeCart(){cartModal.style.display="none"}
+window.closeCart=function(){cartModal.style.display="none"}
 
-function removeCart(i){
+window.removeCart=function(i){
 cart.splice(i,1);
 updateCart();
 openCart();
 }
 
-function openBuyDirect(i){
+window.openBuyDirect=function(i){
 cart=[products[i]];
 updateCart();
 openCheckout();
 }
 
-function buySelected(){
+window.buySelected=function(){
 cart=[selectedProduct];
 updateCart();
 closeDetails();
 openCheckout();
 }
 
-function openCheckout(){
+window.openCheckout=function(){
 if(cart.length===0){
 alert("Cart is empty");
 return;
@@ -306,9 +326,9 @@ cartModal.style.display="none";
 checkoutModal.style.display="flex";
 }
 
-function closeCheckout(){checkoutModal.style.display="none"}
+window.closeCheckout=function(){checkoutModal.style.display="none"}
 
-function confirmPurchase(){
+window.confirmPurchase=async function(){
 let name=customerName.value;
 let gram=village.value;
 let dis=district.value;
@@ -328,26 +348,42 @@ let orderDateTime=now.toLocaleString();
 
 let total=cart.reduce((sum,item)=>sum+item.price,0);
 let productText=cart.map(item=>item.name+" ৳"+item.price).join(", ");
+let fullAddress=`${gram}, ${tha}, ${dis}`;
 
 let order={
 id:"ORD-"+Date.now(),
+
 name:name,
+customerName:name,
+
 mobile:mob,
+
 village:gram,
 district:dis,
 thana:tha,
+address:fullAddress,
+
 payment:pay,
+
 products:productText,
+product:productText,
+
 total:total,
 status:"Pending",
+
 date:orderDate,
 time:orderTime,
 dateTime:orderDateTime
 };
 
-let orders=JSON.parse(localStorage.getItem("orders")) || [];
-orders.push(order);
-localStorage.setItem("orders", JSON.stringify(orders));
+try{
+await addDoc(collection(db,"orders"),order);
+console.log("Order saved to Firebase");
+}catch(error){
+console.error("Firebase error:",error);
+alert("Firebase save হয়নি। Rules/Config চেক করুন।");
+return;
+}
 
 let msg=`New Order:%0AOrder ID: ${order.id}%0ADate: ${orderDateTime}%0AName: ${name}%0AVillage: ${gram}%0ADistrict: ${dis}%0AThana: ${tha}%0AMobile: ${mob}%0APayment: ${pay}%0A%0AProducts:%0A`;
 
@@ -372,11 +408,11 @@ mobile.value="";
 deliveryMethod.value="";
 }
 
-function closeSuccess(){successModal.style.display="none"}
+window.closeSuccess=function(){successModal.style.display="none"}
 
-function darkMode(){document.body.classList.toggle("dark")}
-function openLogin(){loginModal.style.display="flex"}
-function closeLogin(){loginModal.style.display="none"}
+window.darkMode=function(){document.body.classList.toggle("dark")}
+window.openLogin=function(){loginModal.style.display="flex"}
+window.closeLogin=function(){loginModal.style.display="none"}
 
 showProducts();
 </script>
