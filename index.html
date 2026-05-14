@@ -33,7 +33,7 @@ footer{background:#111;color:white;text-align:center;padding:25px;margin-top:30p
 .cart-item{border-bottom:1px solid #ddd;padding:10px 0;text-align:left}
 .notice{position:fixed;top:80px;right:20px;background:green;color:white;padding:12px 18px;border-radius:8px;display:none;z-index:1000}
 .whatsapp-float{position:fixed;right:20px;bottom:20px;background:#25D366;color:white;padding:15px;border-radius:50%;font-size:24px;text-decoration:none;z-index:20}
-@media(max-width:700px){nav{flex-direction:column}.hero h2{font-size:30px}}
+@media(max-width:700px){nav{flex-direction:column}.hero h2{font-size:30px}.controls input,.controls select{width:100%}}
 </style>
 </head>
 
@@ -71,11 +71,18 @@ footer{background:#111;color:white;text-align:center;padding:25px;margin-top:30p
 
 <div class="controls">
 <input type="text" id="searchInput" placeholder="Search product..." onkeyup="showProducts()">
+
 <select id="categoryFilter" onchange="showProducts()">
 <option value="All">All Categories</option>
-<option>Mobile</option><option>Electronics</option><option>Fashion</option>
-<option>Computer</option><option>Laptop</option><option>Watch</option>
-<option>Headphone</option><option>Camera</option><option>Gaming</option>
+<option>Mobile</option>
+<option>Electronics</option>
+<option>Fashion</option>
+<option>Computer</option>
+<option>Laptop</option>
+<option>Watch</option>
+<option>Headphone</option>
+<option>Camera</option>
+<option>Gaming</option>
 </select>
 </div>
 
@@ -162,6 +169,7 @@ footer{background:#111;color:white;text-align:center;padding:25px;margin-top:30p
 <span class="close" onclick="closeSuccess()">×</span>
 <h1 style="color:green">✅ ক্রয় সফল হয়েছে</h1>
 <p>আপনার অর্ডার সফলভাবে গ্রহণ করা হয়েছে।</p>
+<p>অর্ডারটি Admin Panel history তে save হয়েছে।</p>
 <button class="btn" onclick="closeSuccess()">OK</button>
 </div>
 </div>
@@ -197,6 +205,7 @@ let list=document.getElementById("productList");
 let search=document.getElementById("searchInput").value.toLowerCase();
 let category=document.getElementById("categoryFilter").value;
 list.innerHTML="";
+
 products.filter(p=>p.name.toLowerCase().includes(search)&&(category==="All"||p.category===category)).forEach((p,i)=>{
 list.innerHTML+=`
 <div class="card">
@@ -221,26 +230,59 @@ detailsPrice.innerText="৳"+selectedProduct.price;
 detailsRating.innerText=selectedProduct.rating;
 detailsModal.style.display="flex";
 }
+
 function closeDetails(){detailsModal.style.display="none"}
 
-function addToCart(i){cart.push(products[i]);updateCart();notify()}
-function addSelectedToCart(){cart.push(selectedProduct);updateCart();notify()}
-function updateCart(){cartCount.innerText=cart.length}
-function notify(){notice.style.display="block";setTimeout(()=>notice.style.display="none",1500)}
+function addToCart(i){
+cart.push(products[i]);
+updateCart();
+notify();
+}
+
+function addSelectedToCart(){
+cart.push(selectedProduct);
+updateCart();
+notify();
+}
+
+function updateCart(){
+cartCount.innerText=cart.length;
+}
+
+function notify(){
+notice.style.display="block";
+setTimeout(()=>notice.style.display="none",1500);
+}
 
 function openCart(){
 cartItems.innerHTML="";
 let total=0;
-if(cart.length===0){cartItems.innerHTML="<p>Your cart is empty.</p>"}
+
+if(cart.length===0){
+cartItems.innerHTML="<p>Your cart is empty.</p>";
+}
+
 cart.forEach((item,i)=>{
 total+=item.price;
-cartItems.innerHTML+=`<div class="cart-item"><b>${item.name}</b><br>৳${item.price}<br><button class="btn" onclick="removeCart(${i})">Remove</button></div>`;
+cartItems.innerHTML+=`
+<div class="cart-item">
+<b>${item.name}</b><br>
+৳${item.price}<br>
+<button class="btn" onclick="removeCart(${i})">Remove</button>
+</div>`;
 });
+
 cartTotal.innerText="Total: ৳"+total;
 cartModal.style.display="flex";
 }
+
 function closeCart(){cartModal.style.display="none"}
-function removeCart(i){cart.splice(i,1);updateCart();openCart()}
+
+function removeCart(i){
+cart.splice(i,1);
+updateCart();
+openCart();
+}
 
 function openBuyDirect(i){
 cart=[products[i]];
@@ -256,10 +298,14 @@ openCheckout();
 }
 
 function openCheckout(){
-if(cart.length===0){alert("Cart is empty");return}
+if(cart.length===0){
+alert("Cart is empty");
+return;
+}
 cartModal.style.display="none";
 checkoutModal.style.display="flex";
 }
+
 function closeCheckout(){checkoutModal.style.display="none"}
 
 function confirmPurchase(){
@@ -275,10 +321,16 @@ alert("Please fill all address and payment fields");
 return;
 }
 
+let now=new Date();
+let orderDate=now.toISOString().split("T")[0];
+let orderTime=now.toLocaleTimeString();
+let orderDateTime=now.toLocaleString();
+
 let total=cart.reduce((sum,item)=>sum+item.price,0);
 let productText=cart.map(item=>item.name+" ৳"+item.price).join(", ");
 
 let order={
+id:"ORD-"+Date.now(),
 name:name,
 mobile:mob,
 village:gram,
@@ -286,14 +338,18 @@ district:dis,
 thana:tha,
 payment:pay,
 products:productText,
-total:total
+total:total,
+status:"Pending",
+date:orderDate,
+time:orderTime,
+dateTime:orderDateTime
 };
 
 let orders=JSON.parse(localStorage.getItem("orders")) || [];
 orders.push(order);
 localStorage.setItem("orders", JSON.stringify(orders));
 
-let msg=`New Order:%0AName: ${name}%0AVillage: ${gram}%0ADistrict: ${dis}%0AThana: ${tha}%0AMobile: ${mob}%0APayment: ${pay}%0A%0AProducts:%0A`;
+let msg=`New Order:%0AOrder ID: ${order.id}%0ADate: ${orderDateTime}%0AName: ${name}%0AVillage: ${gram}%0ADistrict: ${dis}%0AThana: ${tha}%0AMobile: ${mob}%0APayment: ${pay}%0A%0AProducts:%0A`;
 
 cart.forEach(item=>{
 msg+=`- ${item.name} ৳${item.price}%0A`;
@@ -307,6 +363,13 @@ cart=[];
 updateCart();
 checkoutModal.style.display="none";
 successModal.style.display="flex";
+
+customerName.value="";
+village.value="";
+district.value="";
+thana.value="";
+mobile.value="";
+deliveryMethod.value="";
 }
 
 function closeSuccess(){successModal.style.display="none"}
