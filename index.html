@@ -169,7 +169,7 @@ footer{background:#111;color:white;text-align:center;padding:25px;margin-top:30p
 <span class="close" onclick="closeSuccess()">×</span>
 <h1 style="color:green">✅ ক্রয় সফল হয়েছে</h1>
 <p>আপনার অর্ডার সফলভাবে গ্রহণ করা হয়েছে।</p>
-<p>অর্ডারটি Firebase ও Admin Panel history তে save হয়েছে।</p>
+<p>অর্ডারটি Firebase ও Admin Panel এ দেখাবে।</p>
 <button class="btn" onclick="closeSuccess()">OK</button>
 </div>
 </div>
@@ -191,21 +191,20 @@ footer{background:#111;color:white;text-align:center;padding:25px;margin-top:30p
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
-// Your Firebase configuration
+// Your Firebase configuration (Admin Panel এর সাথে মিলিয়ে দেওয়া হয়েছে)
 const firebaseConfig = {
-  apiKey: "AIzaSyAwcW-acIEwHRdCnguHmFGHIRImUo0ko",
+  apiKey: "AIzaSyAlCW-a1EWiHRdCmghUMfGM1RImXUoCWo",
   authDomain: "global-online-shop.firebaseapp.com",
   projectId: "global-online-shop",
   storageBucket: "global-online-shop.firebasestorage.app",
-  messagingSenderId: "63653384722",
-  appId: "1:63653384722:web:7976ddc7b3ac096251ecb"
+  messagingSenderId: "63053384722",
+  appId: "1:63053384722:web:7970ddc7b3ac0906251ccb"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Make Firebase available globally
 window.db = db;
 window.collection = collection;
 window.addDoc = addDoc;
@@ -256,7 +255,6 @@ window.showProducts = async function() {
   let category = document.getElementById("categoryFilter").value;
   list.innerHTML = "<p>Loading products...</p>";
   
-  // Ensure products exist
   await seedProductsIfEmpty();
   
   const allProducts = await loadProductsFromFirebase();
@@ -310,7 +308,6 @@ window.openBuyDirectFromFirebase = function(i) {
   openCheckout();
 }
 
-// Original helper functions
 window.closeDetails = function() { document.getElementById("detailsModal").style.display = "none"; }
 window.addSelectedToCart = function() { if(selectedProduct) { cart.push(selectedProduct); updateCart(); notify(); } }
 window.buySelected = function() { if(selectedProduct) { cart = [selectedProduct]; updateCart(); closeDetails(); openCheckout(); } }
@@ -375,37 +372,43 @@ window.confirmPurchase = async function() {
   let productText = cart.map(item => item.name + " ৳" + item.price).join(", ");
   let orderId = "ORD-" + Date.now();
   
+  // পুরো ঠিকানা তৈরি করুন (Admin Panel এর address ফিল্ডের জন্য)
+  let fullAddress = `${gram}, ${tha}, ${dis}`;
+  
+  // Admin Panel যেভাবে ডাটা দেখতে চায় সেভাবে সেভ করুন
   let order = {
-    id: orderId,
-    name: name,
-    mobile: mob,
-    village: gram,
+    customerName: name,      // ← Admin Panel এ "customerName" চাচ্ছে
+    mobile: mob,             // ← ঠিক আছে
+    address: fullAddress,    // ← Admin Panel এ "address" চাচ্ছে
+    product: productText,    // ← Admin Panel এ "product" চাচ্ছে (একবচনে)
+    total: total,            // ← ঠিক আছে
+    status: "Pending",       // ← Admin Panel দেখাবে "status" হিসেবে
+    dateTime: orderDateTime,
+    date: orderDate,
+    village: gram,           // অতিরিক্ত (আপনার প্রয়োজনে)
     district: dis,
     thana: tha,
     payment: pay,
-    products: productText,
-    total: total,
-    status: "Pending",
-    date: orderDate,
-    time: orderTime,
-    dateTime: orderDateTime
+    orderId: orderId
   };
   
-  // Save to localStorage (for admin panel)
+  // Save to localStorage (backup)
   let orders = JSON.parse(localStorage.getItem("orders")) || [];
   orders.push(order);
   localStorage.setItem("orders", JSON.stringify(orders));
   
-  // Save to Firebase
+  // Save to Firebase (Admin Panel এ দেখানোর জন্য)
   try {
     await addDoc(collection(db, "orders"), order);
-    console.log("✅ Order saved to Firebase");
+    console.log("✅ Order saved to Firebase with Admin Panel compatible format");
   } catch(e) {
     console.error("Firestore error:", e);
+    alert("Firebase এ সেভ করতে সমস্যা হয়েছে! নেটওয়ার্ক চেক করুন।");
+    return;
   }
   
   // WhatsApp message
-  let msg = `New Order:%0AOrder ID: ${orderId}%0ADate: ${orderDateTime}%0AName: ${name}%0AVillage: ${gram}%0ADistrict: ${dis}%0AThana: ${tha}%0AMobile: ${mob}%0APayment: ${pay}%0A%0AProducts:%0A`;
+  let msg = `New Order:%0AOrder ID: ${orderId}%0ADate: ${orderDateTime}%0AName: ${name}%0AAddress: ${fullAddress}%0AMobile: ${mob}%0APayment: ${pay}%0A%0AProducts:%0A`;
   cart.forEach(item => { msg += `- ${item.name} ৳${item.price}%0A`; });
   msg += `%0ATotal: ৳${total}`;
   window.open("https://wa.me/8801842602595?text=" + msg, "_blank");
