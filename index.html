@@ -71,18 +71,11 @@ footer{background:#111;color:white;text-align:center;padding:25px;margin-top:30p
 
 <div class="controls">
 <input type="text" id="searchInput" placeholder="Search product..." onkeyup="showProducts()">
-
 <select id="categoryFilter" onchange="showProducts()">
 <option value="All">All Categories</option>
-<option>Mobile</option>
-<option>Electronics</option>
-<option>Fashion</option>
-<option>Computer</option>
-<option>Laptop</option>
-<option>Watch</option>
-<option>Headphone</option>
-<option>Camera</option>
-<option>Gaming</option>
+<option>Mobile</option><option>Electronics</option><option>Fashion</option>
+<option>Computer</option><option>Laptop</option><option>Watch</option>
+<option>Headphone</option><option>Camera</option><option>Gaming</option>
 </select>
 </div>
 
@@ -101,97 +94,29 @@ footer{background:#111;color:white;text-align:center;padding:25px;margin-top:30p
 <p>Phone: 01842602595</p>
 <p>Email: yourmail@gmail.com</p><br>
 <a class="btn" href="https://wa.me/8801842602595">WhatsApp Direct Chat</a>
-<a class="btn" href="YOUR_FACEBOOK_PAGE_LINK">Facebook Page</a>
+<a class="btn" href="#">Facebook Page</a>
 </section>
 
 <footer>© 2026 Global Online Shop. All Rights Reserved.</footer>
 
 <a class="whatsapp-float" href="https://wa.me/8801842602595">💬</a>
 
-<div id="detailsModal" class="modal">
-<div class="modal-box">
-<span class="close" onclick="closeDetails()">×</span>
-<img id="detailsImg" style="width:100%;height:210px;object-fit:cover;border-radius:12px">
-<h2 id="detailsName" style="color:green;margin:15px 0"></h2>
-<div id="detailsRating" class="rating"></div>
-<p id="detailsDesc"></p>
-<h3 id="detailsPrice" style="color:green;margin:15px"></h3>
-<button class="btn" onclick="buySelected()">Buy Now</button>
-<button class="btn" onclick="addSelectedToCart()">Add To Cart</button>
-</div>
-</div>
+<!-- Modals -->
+<div id="detailsModal" class="modal"><div class="modal-box"><span class="close" onclick="closeDetails()">×</span><img id="detailsImg" style="width:100%;height:210px;object-fit:cover;border-radius:12px"><h2 id="detailsName" style="color:green;margin:15px 0"></h2><div id="detailsRating" class="rating"></div><p id="detailsDesc"></p><h3 id="detailsPrice" style="color:green;margin:15px"></h3><button class="btn" onclick="buySelected()">Buy Now</button><button class="btn" onclick="addSelectedToCart()">Add To Cart</button></div></div>
 
-<div id="cartModal" class="modal">
-<div class="modal-box">
-<span class="close" onclick="closeCart()">×</span>
-<h2 style="color:green">My Cart</h2>
-<div id="cartItems"></div>
-<h3 id="cartTotal" style="color:green;margin-top:15px"></h3>
-<button class="btn" onclick="openCheckout()">Checkout Cart</button>
-</div>
-</div>
+<div id="cartModal" class="modal"><div class="modal-box"><span class="close" onclick="closeCart()">×</span><h2 style="color:green">My Cart</h2><div id="cartItems"></div><h3 id="cartTotal" style="color:green;margin-top:15px"></h3><button class="btn" onclick="openCheckout()">Checkout Cart</button></div></div>
 
-<div id="checkoutModal" class="modal">
-<div class="modal-box">
-<span class="close" onclick="closeCheckout()">×</span>
-<h2 style="color:green">Delivery Address</h2>
+<div id="checkoutModal" class="modal"><div class="modal-box"><span class="close" onclick="closeCheckout()">×</span><h2 style="color:green">Delivery Address</h2><input id="customerName" type="text" placeholder="Customer Name"><input id="village" type="text" placeholder="Village / Gram"><select id="district"><option value="">Select District</option><option>Dhaka</option><option>Gazipur</option><option>Narayanganj</option><option>Chattogram</option><option>Sylhet</option><option>Rajshahi</option><option>Khulna</option><option>Barishal</option></select><input id="thana" type="text" placeholder="Thana / Upazila"><input id="mobile" type="text" placeholder="Mobile Number"><select id="deliveryMethod"><option value="">Select Payment Method</option><option>Visa / Debit Card</option><option>bKash</option><option>Nagad</option><option>Cash on Delivery</option></select><button class="btn" onclick="confirmPurchase()">Confirm Purchase</button></div></div>
 
-<input id="customerName" type="text" placeholder="Customer Name">
-<input id="village" type="text" placeholder="Village / Gram">
+<div id="successModal" class="modal"><div class="modal-box"><span class="close" onclick="closeSuccess()">×</span><h1 style="color:green">✅ ক্রয় সফল হয়েছে</h1><p>আপনার অর্ডার সফলভাবে গ্রহণ করা হয়েছে।</p><p>অর্ডারটি Firebase ও Admin Panel এ দেখাবে।</p><button class="btn" onclick="closeSuccess()">OK</button></div></div>
 
-<select id="district">
-<option value="">Select District</option>
-<option>Dhaka</option><option>Gazipur</option><option>Narayanganj</option><option>Narsingdi</option>
-<option>Chattogram</option><option>Cox's Bazar</option><option>Cumilla</option><option>Noakhali</option>
-<option>Sylhet</option><option>Moulvibazar</option><option>Rajshahi</option><option>Rangpur</option>
-<option>Khulna</option><option>Jashore</option><option>Barishal</option><option>Mymensingh</option>
-<option>Faridpur</option><option>Gopalganj</option><option>Tangail</option><option>Kushtia</option>
-</select>
+<div id="loginModal" class="modal"><div class="modal-box"><span class="close" onclick="closeLogin()">×</span><h2 style="color:green">Login / Signup</h2><input type="text" placeholder="Mobile Number or Gmail"><input type="password" placeholder="Password"><button class="btn" onclick="alert('Demo Login Successful')">Login</button><button class="btn" onclick="alert('Demo Signup Successful')">Signup</button></div></div>
 
-<input id="thana" type="text" placeholder="Thana / Upazila">
-<input id="mobile" type="text" placeholder="Mobile Number">
-
-<select id="deliveryMethod">
-<option value="">Select Payment Method</option>
-<option>Visa / Debit Card</option>
-<option>bKash</option>
-<option>Nagad</option>
-<option>Rocket</option>
-<option>Cash on Delivery</option>
-</select>
-
-<button class="btn" onclick="confirmPurchase()">Confirm Purchase</button>
-</div>
-</div>
-
-<div id="successModal" class="modal">
-<div class="modal-box">
-<span class="close" onclick="closeSuccess()">×</span>
-<h1 style="color:green">✅ ক্রয় সফল হয়েছে</h1>
-<p>আপনার অর্ডার সফলভাবে গ্রহণ করা হয়েছে।</p>
-<p>অর্ডারটি Firebase ও Admin Panel এ দেখাবে।</p>
-<button class="btn" onclick="closeSuccess()">OK</button>
-</div>
-</div>
-
-<div id="loginModal" class="modal">
-<div class="modal-box">
-<span class="close" onclick="closeLogin()">×</span>
-<h2 style="color:green">Login / Signup</h2>
-<input type="text" placeholder="Mobile Number or Gmail">
-<input type="password" placeholder="Password">
-<button class="btn" onclick="alert('Demo Login Successful')">Login</button>
-<button class="btn" onclick="alert('Demo Signup Successful')">Signup</button>
-</div>
-</div>
-
-<!-- Firebase SDK and Main Script -->
 <script type="module">
-// Firebase imports
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, setDoc, doc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
-// Your Firebase configuration (Admin Panel এর সাথে মিলিয়ে দেওয়া হয়েছে)
+// Firebase Config (Admin Panel এর সাথে মিল আছে)
 const firebaseConfig = {
   apiKey: "AIzaSyAlCW-a1EWiHRdCmghUMfGM1RImXUoCWo",
   authDomain: "global-online-shop.firebaseapp.com",
@@ -201,92 +126,97 @@ const firebaseConfig = {
   appId: "1:63053384722:web:7970ddc7b3ac0906251ccb"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-window.db = db;
-window.collection = collection;
-window.addDoc = addDoc;
-window.getDocs = getDocs;
+console.log("✅ Firebase Connected");
 
-console.log("✅ Firebase Connected Successfully!");
-
-// Demo products for initial seeding
+// ডেমো প্রোডাক্ট
 const demoProducts = [
-  {name:"Smart Phone",category:"Mobile",price:15000,rating:"⭐⭐⭐⭐⭐",desc:"Best quality smartphone with modern features.",img:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"},
-  {name:"Headphone",category:"Headphone",price:1200,rating:"⭐⭐⭐⭐⭐",desc:"High quality sound headphone for music.",img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e"},
-  {name:"Smart Watch",category:"Watch",price:2500,rating:"⭐⭐⭐⭐",desc:"Modern smart watch with stylish design.",img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30"},
-  {name:"T-Shirt",category:"Fashion",price:650,rating:"⭐⭐⭐⭐",desc:"Comfortable and stylish fashion t-shirt.",img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"},
-  {name:"Laptop",category:"Laptop",price:55000,rating:"⭐⭐⭐⭐⭐",desc:"Powerful laptop for work and study.",img:"https://images.unsplash.com/photo-1496181133206-80ce9b88a853"},
-  {name:"Camera",category:"Camera",price:32000,rating:"⭐⭐⭐⭐",desc:"HD camera for photography.",img:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32"},
-  {name:"Gaming Mouse",category:"Gaming",price:900,rating:"⭐⭐⭐⭐⭐",desc:"RGB gaming mouse.",img:"https://images.unsplash.com/photo-1527814050087-3793815479db"},
-  {name:"Keyboard",category:"Computer",price:1500,rating:"⭐⭐⭐⭐",desc:"Mechanical style keyboard.",img:"https://images.unsplash.com/photo-1587829741301-dc798b83add3"}
+  {name:"Smart Phone",category:"Mobile",price:15000,rating:"⭐⭐⭐⭐⭐",desc:"Best quality smartphone",img:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"},
+  {name:"Headphone",category:"Headphone",price:1200,rating:"⭐⭐⭐⭐⭐",desc:"High quality sound",img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e"},
+  {name:"Smart Watch",category:"Watch",price:2500,rating:"⭐⭐⭐⭐",desc:"Stylish smart watch",img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30"},
+  {name:"T-Shirt",category:"Fashion",price:650,rating:"⭐⭐⭐⭐",desc:"Comfortable t-shirt",img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"},
+  {name:"Laptop",category:"Laptop",price:55000,rating:"⭐⭐⭐⭐⭐",desc:"Powerful laptop",img:"https://images.unsplash.com/photo-1496181133206-80ce9b88a853"},
+  {name:"Camera",category:"Camera",price:32000,rating:"⭐⭐⭐⭐",desc:"HD camera",img:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32"},
+  {name:"Gaming Mouse",category:"Gaming",price:900,rating:"⭐⭐⭐⭐⭐",desc:"RGB gaming mouse",img:"https://images.unsplash.com/photo-1527814050087-3793815479db"},
+  {name:"Keyboard",category:"Computer",price:1500,rating:"⭐⭐⭐⭐",desc:"Mechanical keyboard",img:"https://images.unsplash.com/photo-1587829741301-dc798b83add3"}
 ];
 
-async function seedProductsIfEmpty() {
-  const snapshot = await getDocs(collection(db, "products"));
-  if(snapshot.empty) {
-    console.log("Seeding demo products...");
-    for(let p of demoProducts) {
-      await addDoc(collection(db, "products"), p);
+// Firestore-এ প্রোডাক্ট যোগ করা (যদি খালি থাকে)
+async function seedProducts() {
+  try {
+    const snapshot = await getDocs(collection(db, "products"));
+    if (snapshot.empty) {
+      console.log("📦 Adding demo products to Firestore...");
+      for (let p of demoProducts) {
+        await addDoc(collection(db, "products"), p);
+      }
+      console.log("✅ Demo products added!");
+    } else {
+      console.log("✅ Products already exist in Firestore");
     }
-    console.log("✅ Demo products added to Firestore");
+  } catch (error) {
+    console.error("❌ Firestore Error:", error);
+    document.getElementById("productList").innerHTML = `<p style="color:red">Firebase Error: ${error.message}. Please check Firestore Rules.</p>`;
   }
 }
 
-// Global variables
-let selectedProduct = null;
-let cart = [];
 let currentProducts = [];
+let cart = [];
+let selectedProduct = null;
 
-async function loadProductsFromFirebase() {
-  const querySnapshot = await getDocs(collection(db, "products"));
-  const products = [];
-  querySnapshot.forEach((doc) => {
-    products.push({ id: doc.id, ...doc.data() });
-  });
-  return products;
-}
-
+// প্রোডাক্ট লোড করা
 window.showProducts = async function() {
-  let list = document.getElementById("productList");
-  let search = document.getElementById("searchInput").value.toLowerCase();
-  let category = document.getElementById("categoryFilter").value;
-  list.innerHTML = "<p>Loading products...</p>";
+  const list = document.getElementById("productList");
+  const search = document.getElementById("searchInput").value.toLowerCase();
+  const category = document.getElementById("categoryFilter").value;
   
-  await seedProductsIfEmpty();
+  list.innerHTML = "<p>Loading products from Firebase...</p>";
   
-  const allProducts = await loadProductsFromFirebase();
-  currentProducts = allProducts;
-  
-  const filtered = allProducts.filter(p => 
-    p.name.toLowerCase().includes(search) && 
-    (category === "All" || p.category === category)
-  );
-  
-  if(filtered.length === 0) {
-    list.innerHTML = "<p>No products found.</p>";
-    return;
+  try {
+    const snapshot = await getDocs(collection(db, "products"));
+    const products = [];
+    snapshot.forEach(doc => products.push({ id: doc.id, ...doc.data() }));
+    
+    if (products.length === 0) {
+      list.innerHTML = "<p>No products found. Please check Firestore collection 'products'.</p>";
+      return;
+    }
+    
+    currentProducts = products;
+    const filtered = products.filter(p => 
+      p.name.toLowerCase().includes(search) && 
+      (category === "All" || p.category === category)
+    );
+    
+    if (filtered.length === 0) {
+      list.innerHTML = "<p>No matching products.</p>";
+      return;
+    }
+    
+    list.innerHTML = "";
+    filtered.forEach((p, idx) => {
+      list.innerHTML += `
+        <div class="card">
+          <img src="${p.img}" onerror="this.src='https://via.placeholder.com/200'">
+          <h3>${p.name}</h3>
+          <p>${p.category}</p>
+          <div class="rating">${p.rating}</div>
+          <p class="price">৳${p.price}</p>
+          <button class="btn" onclick="openDetails(${idx})">Details</button>
+          <button class="btn" onclick="addToCart(${idx})">Add Cart</button>
+          <button class="btn" onclick="buyNow(${idx})">Buy Now</button>
+        </div>`;
+    });
+  } catch (error) {
+    console.error("Error loading products:", error);
+    list.innerHTML = `<p style="color:red">Error: ${error.message}<br>Make sure Firestore Rules allow read access.</p>`;
   }
-  
-  list.innerHTML = "";
-  filtered.forEach((p, idx) => {
-    list.innerHTML += `
-      <div class="card">
-        <img src="${p.img}">
-        <h3>${p.name}</h3>
-        <p>${p.category}</p>
-        <div class="rating">${p.rating}</div>
-        <p class="price">৳${p.price}</p>
-        <button class="btn" onclick="window.openDetailsFromFirebase(${idx})">Details</button>
-        <button class="btn" onclick="window.addToCartFromFirebase(${idx})">Add Cart</button>
-        <button class="btn" onclick="window.openBuyDirectFromFirebase(${idx})">Buy Now</button>
-      </div>`;
-  });
-}
+};
 
-window.openDetailsFromFirebase = function(i) {
+// গ্লোবাল ফাংশন
+window.openDetails = function(i) {
   selectedProduct = currentProducts[i];
   document.getElementById("detailsImg").src = selectedProduct.img;
   document.getElementById("detailsName").innerText = selectedProduct.name;
@@ -294,147 +224,135 @@ window.openDetailsFromFirebase = function(i) {
   document.getElementById("detailsPrice").innerText = "৳" + selectedProduct.price;
   document.getElementById("detailsRating").innerText = selectedProduct.rating;
   document.getElementById("detailsModal").style.display = "flex";
-}
+};
 
-window.addToCartFromFirebase = function(i) {
+window.addToCart = function(i) {
   cart.push(currentProducts[i]);
   updateCart();
   notify();
-}
+};
 
-window.openBuyDirectFromFirebase = function(i) {
+window.buyNow = function(i) {
   cart = [currentProducts[i]];
   updateCart();
   openCheckout();
-}
+};
 
-window.closeDetails = function() { document.getElementById("detailsModal").style.display = "none"; }
-window.addSelectedToCart = function() { if(selectedProduct) { cart.push(selectedProduct); updateCart(); notify(); } }
-window.buySelected = function() { if(selectedProduct) { cart = [selectedProduct]; updateCart(); closeDetails(); openCheckout(); } }
+window.addSelectedToCart = function() {
+  if (selectedProduct) {
+    cart.push(selectedProduct);
+    updateCart();
+    notify();
+  }
+};
+
+window.buySelected = function() {
+  if (selectedProduct) {
+    cart = [selectedProduct];
+    updateCart();
+    closeDetails();
+    openCheckout();
+  }
+};
 
 function updateCart() {
   document.getElementById("cartCount").innerText = cart.length;
 }
 
 function notify() {
-  let notice = document.getElementById("notice");
+  const notice = document.getElementById("notice");
   notice.style.display = "block";
   setTimeout(() => notice.style.display = "none", 1500);
 }
 
 window.openCart = function() {
-  let cartItemsDiv = document.getElementById("cartItems");
+  const cartDiv = document.getElementById("cartItems");
   let total = 0;
-  cartItemsDiv.innerHTML = "";
-  if(cart.length === 0) {
-    cartItemsDiv.innerHTML = "<p>Your cart is empty.</p>";
+  cartDiv.innerHTML = "";
+  if (cart.length === 0) {
+    cartDiv.innerHTML = "<p>Your cart is empty.</p>";
   }
   cart.forEach((item, i) => {
     total += item.price;
-    cartItemsDiv.innerHTML += `
-      <div class="cart-item">
-        <b>${item.name}</b><br>
-        ৳${item.price}<br>
-        <button class="btn" onclick="window.removeCart(${i})">Remove</button>
-      </div>`;
+    cartDiv.innerHTML += `<div class="cart-item"><b>${item.name}</b><br>৳${item.price}<br><button class="btn" onclick="removeCartItem(${i})">Remove</button></div>`;
   });
   document.getElementById("cartTotal").innerText = "Total: ৳" + total;
   document.getElementById("cartModal").style.display = "flex";
-}
+};
 
-window.closeCart = function() { document.getElementById("cartModal").style.display = "none"; }
-window.removeCart = function(i) { cart.splice(i,1); updateCart(); openCart(); }
-window.openCheckout = function() { 
-  if(cart.length === 0) { alert("Cart is empty"); return; }
+window.removeCartItem = function(i) {
+  cart.splice(i, 1);
+  updateCart();
+  openCart();
+};
+
+window.closeCart = () => document.getElementById("cartModal").style.display = "none";
+window.closeDetails = () => document.getElementById("detailsModal").style.display = "none";
+window.openCheckout = () => {
+  if (cart.length === 0) return alert("Cart is empty");
   document.getElementById("cartModal").style.display = "none";
   document.getElementById("checkoutModal").style.display = "flex";
-}
-window.closeCheckout = function() { document.getElementById("checkoutModal").style.display = "none"; }
+};
+window.closeCheckout = () => document.getElementById("checkoutModal").style.display = "none";
+window.closeSuccess = () => document.getElementById("successModal").style.display = "none";
+window.darkMode = () => document.body.classList.toggle("dark");
+window.openLogin = () => document.getElementById("loginModal").style.display = "flex";
+window.closeLogin = () => document.getElementById("loginModal").style.display = "none";
 
+// অর্ডার Confirm
 window.confirmPurchase = async function() {
-  let name = document.getElementById("customerName").value;
-  let gram = document.getElementById("village").value;
-  let dis = document.getElementById("district").value;
-  let tha = document.getElementById("thana").value;
-  let mob = document.getElementById("mobile").value;
-  let pay = document.getElementById("deliveryMethod").value;
-  
-  if(!name || !gram || !dis || !tha || !mob || !pay) {
-    alert("Please fill all address and payment fields");
-    return;
+  const name = document.getElementById("customerName").value;
+  const gram = document.getElementById("village").value;
+  const dis = document.getElementById("district").value;
+  const tha = document.getElementById("thana").value;
+  const mob = document.getElementById("mobile").value;
+  const pay = document.getElementById("deliveryMethod").value;
+
+  if (!name || !gram || !dis || !tha || !mob || !pay) {
+    return alert("Please fill all fields");
   }
-  
-  let now = new Date();
-  let orderDate = now.toISOString().split("T")[0];
-  let orderTime = now.toLocaleTimeString();
-  let orderDateTime = now.toLocaleString();
-  let total = cart.reduce((sum, item) => sum + item.price, 0);
-  let productText = cart.map(item => item.name + " ৳" + item.price).join(", ");
-  let orderId = "ORD-" + Date.now();
-  
-  // পুরো ঠিকানা তৈরি করুন (Admin Panel এর address ফিল্ডের জন্য)
-  let fullAddress = `${gram}, ${tha}, ${dis}`;
-  
-  // Admin Panel যেভাবে ডাটা দেখতে চায় সেভাবে সেভ করুন
-  let order = {
-    customerName: name,      // ← Admin Panel এ "customerName" চাচ্ছে
-    mobile: mob,             // ← ঠিক আছে
-    address: fullAddress,    // ← Admin Panel এ "address" চাচ্ছে
-    product: productText,    // ← Admin Panel এ "product" চাচ্ছে (একবচনে)
-    total: total,            // ← ঠিক আছে
-    status: "Pending",       // ← Admin Panel দেখাবে "status" হিসেবে
+
+  const total = cart.reduce((sum, item) => sum + item.price, 0);
+  const productText = cart.map(item => `${item.name} ৳${item.price}`).join(", ");
+  const fullAddress = `${gram}, ${tha}, ${dis}`;
+  const now = new Date();
+  const orderDateTime = now.toLocaleString();
+
+  const order = {
+    customerName: name,
+    mobile: mob,
+    address: fullAddress,
+    product: productText,
+    total: total,
+    status: "Pending",
     dateTime: orderDateTime,
-    date: orderDate,
-    village: gram,           // অতিরিক্ত (আপনার প্রয়োজনে)
-    district: dis,
-    thana: tha,
-    payment: pay,
-    orderId: orderId
+    date: now.toISOString().split("T")[0]
   };
-  
-  // Save to localStorage (backup)
-  let orders = JSON.parse(localStorage.getItem("orders")) || [];
-  orders.push(order);
-  localStorage.setItem("orders", JSON.stringify(orders));
-  
-  // Save to Firebase (Admin Panel এ দেখানোর জন্য)
+
   try {
     await addDoc(collection(db, "orders"), order);
-    console.log("✅ Order saved to Firebase with Admin Panel compatible format");
-  } catch(e) {
-    console.error("Firestore error:", e);
-    alert("Firebase এ সেভ করতে সমস্যা হয়েছে! নেটওয়ার্ক চেক করুন।");
-    return;
+    console.log("✅ Order saved to Firebase");
+    
+    // WhatsApp message
+    let msg = `New Order:%0AName: ${name}%0AAddress: ${fullAddress}%0AMobile: ${mob}%0APayment: ${pay}%0AProducts: ${productText}%0ATotal: ৳${total}`;
+    window.open(`https://wa.me/8801842602595?text=${msg}`, "_blank");
+    
+    cart = [];
+    updateCart();
+    document.getElementById("checkoutModal").style.display = "none";
+    document.getElementById("successModal").style.display = "flex";
+    
+    // Clear form
+    ["customerName","village","district","thana","mobile","deliveryMethod"].forEach(id => document.getElementById(id).value = "");
+  } catch (error) {
+    console.error("Order save error:", error);
+    alert("Failed to save order: " + error.message);
   }
-  
-  // WhatsApp message
-  let msg = `New Order:%0AOrder ID: ${orderId}%0ADate: ${orderDateTime}%0AName: ${name}%0AAddress: ${fullAddress}%0AMobile: ${mob}%0APayment: ${pay}%0A%0AProducts:%0A`;
-  cart.forEach(item => { msg += `- ${item.name} ৳${item.price}%0A`; });
-  msg += `%0ATotal: ৳${total}`;
-  window.open("https://wa.me/8801842602595?text=" + msg, "_blank");
-  
-  cart = [];
-  updateCart();
-  document.getElementById("checkoutModal").style.display = "none";
-  document.getElementById("successModal").style.display = "flex";
-  
-  // Clear form
-  document.getElementById("customerName").value = "";
-  document.getElementById("village").value = "";
-  document.getElementById("district").value = "";
-  document.getElementById("thana").value = "";
-  document.getElementById("mobile").value = "";
-  document.getElementById("deliveryMethod").value = "";
-}
-
-window.closeSuccess = function() { document.getElementById("successModal").style.display = "none"; }
-window.darkMode = function() { document.body.classList.toggle("dark"); }
-window.openLogin = function() { document.getElementById("loginModal").style.display = "flex"; }
-window.closeLogin = function() { document.getElementById("loginModal").style.display = "none"; }
+};
 
 // Initialize
-await seedProductsIfEmpty();
-showProducts();
+await seedProducts();
+await showProducts();
 </script>
 
 </body>
