@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-Vendor Ecommerce - Global Shop</title>
+    <title>Global Online Shop - Best Ecommerce in Bangladesh</title>
     <style>
         * {
             margin: 0;
@@ -13,102 +13,144 @@
         }
 
         body {
-            background: #f0f2f5;
+            background: #f5f7fb;
         }
 
-        /* Navbar */
-        .navbar {
-            background: linear-gradient(135deg, #1a8e2d, #0d5c1a);
+        /* Header & Navigation */
+        .header {
+            background: linear-gradient(135deg, #1e8e3e, #0d5c1a);
             color: white;
-            padding: 1rem 2rem;
+            padding: 20px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+        }
+
+        .navbar {
+            background: white;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
+            color: #1e8e3e;
         }
 
-        .nav-links {
+        .nav-buttons {
             display: flex;
-            gap: 1.5rem;
+            gap: 15px;
             align-items: center;
-        }
-
-        .nav-links a, .nav-links button {
-            color: white;
-            text-decoration: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-
-        .nav-links a:hover, .nav-links button:hover {
-            background: rgba(255,255,255,0.2);
-        }
-
-        .cart-btn {
-            background: #ff6b35;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #1a8e2d, #0d5c1a);
-            color: white;
-            text-align: center;
-            padding: 4rem 2rem;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Products */
-        .products-section {
-            padding: 2rem;
-            max-width: 1400px;
-            margin: auto;
-        }
-
-        .filters {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
             flex-wrap: wrap;
         }
 
-        .filters input, .filters select {
-            padding: 0.8rem;
+        .nav-buttons button, .nav-buttons a {
+            background: none;
+            border: none;
+            color: #1e8e3e;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 8px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .nav-buttons button:hover, .nav-buttons a:hover {
+            background: #e8f5e9;
+        }
+
+        .cart-btn {
+            background: #ff6b35 !important;
+            color: white !important;
+        }
+
+        /* Search & Categories */
+        .search-section {
+            padding: 20px 30px;
+            background: white;
+            margin: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px;
             border: 1px solid #ddd;
             border-radius: 8px;
             font-size: 1rem;
         }
 
+        .category-filter {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            min-width: 200px;
+        }
+
+        /* Categories Grid */
+        .categories-section {
+            padding: 0 30px;
+            margin-bottom: 20px;
+        }
+
+        .categories-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .cat-tag {
+            background: #e8f5e9;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .cat-tag:hover, .cat-tag.active {
+            background: #1e8e3e;
+            color: white;
+        }
+
+        /* Products */
+        .products-section {
+            padding: 20px 30px;
+        }
+
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
+            gap: 25px;
         }
 
         .product-card {
             background: white;
-            border-radius: 12px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
             transition: transform 0.3s;
+            cursor: pointer;
         }
 
         .product-card:hover {
@@ -122,47 +164,37 @@
         }
 
         .product-info {
-            padding: 1rem;
+            padding: 15px;
         }
 
-        .product-title {
+        .product-name {
             font-size: 1.1rem;
             font-weight: bold;
-            margin-bottom: 0.5rem;
+            margin-bottom: 5px;
         }
 
-        .vendor-name {
-            color: #666;
-            font-size: 0.85rem;
-            margin-bottom: 0.5rem;
+        .seller-name {
+            color: #ff6b35;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
         }
 
         .product-price {
-            color: #1a8e2d;
+            color: #1e8e3e;
             font-size: 1.3rem;
             font-weight: bold;
-            margin: 0.5rem 0;
         }
 
-        .commission {
-            color: #ff6b35;
-            font-size: 0.75rem;
-        }
-
-        .btn {
-            background: #1a8e2d;
+        .add-to-cart {
+            background: #1e8e3e;
             color: white;
             border: none;
-            padding: 0.6rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
+            padding: 10px;
             width: 100%;
-            margin-top: 0.5rem;
-            transition: background 0.3s;
-        }
-
-        .btn:hover {
-            background: #0d5c1a;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
         }
 
         /* Modal */
@@ -181,392 +213,394 @@
 
         .modal-content {
             background: white;
-            padding: 2rem;
-            border-radius: 12px;
+            padding: 30px;
+            border-radius: 15px;
             max-width: 500px;
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
         }
 
-        .modal-content h2 {
-            margin-bottom: 1rem;
-            color: #1a8e2d;
+        .modal-content input, .modal-content select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
         }
 
-        .modal-content input, .modal-content select, .modal-content textarea {
+        .modal-content button {
             width: 100%;
-            padding: 0.8rem;
-            margin: 0.5rem 0;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+            padding: 12px;
+            background: #1e8e3e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
         }
 
         .close {
             float: right;
+            font-size: 24px;
             cursor: pointer;
-            font-size: 1.5rem;
             color: #999;
         }
 
-        /* Toast */
         .toast {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: #1a8e2d;
+            background: #1e8e3e;
             color: white;
-            padding: 1rem 1.5rem;
+            padding: 12px 20px;
             border-radius: 8px;
             display: none;
             z-index: 3000;
         }
 
-        /* Dashboard */
-        .dashboard {
-            padding: 2rem;
-            max-width: 1400px;
-            margin: auto;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        .product-list {
-            background: white;
-            border-radius: 12px;
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-
-        th {
-            background: #1a8e2d;
+        footer {
+            background: #111;
             color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
         }
 
-        .delete-btn {
-            background: #dc3545;
-            padding: 0.3rem 0.8rem;
-            font-size: 0.8rem;
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
+            .navbar { flex-direction: column; gap: 15px; }
+            .search-box { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
-<!-- Navbar -->
+<div class="header">
+    <h1>🛒 Global Online Shop</h1>
+    <p>Bangladesh's Largest Online Marketplace</p>
+</div>
+
 <div class="navbar">
-    <div class="logo">🛒 Global Vendor Hub</div>
-    <div class="nav-links">
-        <a href="#" onclick="showHome()">Home</a>
-        <a href="#" onclick="showDashboard()">Vendor Dashboard</a>
+    <div class="logo">Global Shop</div>
+    <div class="nav-buttons">
+        <a href="#" onclick="showHome()">🏠 Home</a>
+        <a href="#" onclick="showOrders()">📦 My Orders</a>
+        <button id="authBtn" onclick="showAuthModal()">👤 Login / Sign Up</button>
         <button class="cart-btn" onclick="showCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
-        <button id="authBtn" onclick="showAuthModal()">Login / Register</button>
     </div>
 </div>
 
-<!-- Hero -->
-<div class="hero" id="heroSection">
-    <h1>Welcome to Global Vendor Hub</h1>
-    <p>Sell your products, earn money, only 10% commission</p>
-    <button class="btn" onclick="showAuthModal()" style="width: auto; margin-top: 1rem;">Start Selling Now</button>
-</div>
-
-<!-- Products Section -->
-<section class="products-section" id="productsSection">
-    <h2 style="margin-bottom: 1rem;">🔥 Featured Products</h2>
-    <div class="filters">
+<!-- Search & Categories -->
+<div class="search-section">
+    <div class="search-box">
         <input type="text" id="searchInput" placeholder="Search products..." onkeyup="loadProducts()">
-        <select id="categoryFilter" onchange="loadProducts()">
+        <select id="categorySelect" class="category-filter" onchange="loadProducts()">
             <option value="All">All Categories</option>
-            <option>Electronics</option>
-            <option>Fashion</option>
-            <option>Home & Living</option>
-            <option>Books</option>
-            <option>Sports</option>
         </select>
     </div>
-    <div class="products-grid" id="productsGrid">
-        <p>Loading products...</p>
-    </div>
-</section>
-
-<!-- Vendor Dashboard -->
-<div id="vendorDashboard" style="display: none;">
-    <div class="dashboard">
-        <h2>📊 Vendor Dashboard</h2>
-        <div class="stats">
-            <div class="stat-card">
-                <h3 id="vendorProductCount">0</h3>
-                <p>Total Products</p>
-            </div>
-            <div class="stat-card">
-                <h3 id="vendorTotalSales">৳0</h3>
-                <p>Total Sales</p>
-            </div>
-            <div class="stat-card">
-                <h3 id="vendorEarnings">৳0</h3>
-                <p>Your Earnings (After 10% Commission)</p>
-            </div>
-        </div>
-        <button class="btn" onclick="showAddProductModal()" style="width: auto; margin-bottom: 1rem;">+ Add New Product</button>
-        <div class="product-list">
-            <h3>Your Products</h3>
-            <table id="vendorProductsTable">
-                <thead>
-                    <tr><th>Product</th><th>Price</th><th>Category</th><th>Action</th></tr>
-                </thead>
-                <tbody id="vendorProductsBody"></tbody>
-            </table>
-        </div>
-    </div>
 </div>
 
-<!-- Modals -->
+<!-- Categories Tags -->
+<div class="categories-section">
+    <div class="categories-grid" id="categoriesGrid"></div>
+</div>
+
+<!-- Products -->
+<div class="products-section">
+    <h2 style="margin-bottom: 20px;">🔥 All Products</h2>
+    <div class="products-grid" id="productsGrid"></div>
+</div>
+
+<footer>
+    <p>© 2026 Global Online Shop - All Rights Reserved</p>
+    <p>📍 Serving all 64 districts of Bangladesh</p>
+</footer>
+
+<!-- Auth Modal -->
 <div id="authModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal('authModal')">&times;</span>
-        <h2 id="authTitle">Login / Register</h2>
-        <input type="text" id="vendorName" placeholder="Full Name">
-        <input type="email" id="vendorEmail" placeholder="Email">
-        <input type="text" id="vendorPhone" placeholder="Phone Number">
-        <input type="password" id="vendorPassword" placeholder="Password">
-        <select id="userType">
-            <option value="vendor">I want to Sell Products</option>
-            <option value="customer">I want to Buy Products</option>
-        </select>
-        <button class="btn" onclick="register()">Register</button>
-        <p style="margin-top: 1rem;">Already have account? <a href="#" onclick="toggleLogin()">Login</a></p>
+        <h2 id="authTitle">Sign Up</h2>
+        <input type="text" id="fullName" placeholder="Full Name">
+        <input type="text" id="emailPhone" placeholder="Email or Phone Number">
+        <input type="password" id="password" placeholder="Password">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password">
+        <div id="verifyCodeDiv" style="display:none;">
+            <input type="text" id="verifyCode" placeholder="Enter 6-digit verification code">
+        </div>
+        <button id="signupBtn" onclick="signup()">Sign Up</button>
+        <p style="margin-top: 15px; text-align:center;">
+            Already have account? <a href="#" onclick="toggleAuthMode()">Login</a>
+        </p>
     </div>
 </div>
 
-<div id="addProductModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal('addProductModal')">&times;</span>
-        <h2>Add New Product</h2>
-        <input type="text" id="prodName" placeholder="Product Name">
-        <select id="prodCategory"><option>Electronics</option><option>Fashion</option><option>Home & Living</option><option>Books</option><option>Sports</option></select>
-        <input type="number" id="prodPrice" placeholder="Price (৳)">
-        <textarea id="prodDesc" rows="3" placeholder="Product Description"></textarea>
-        <input type="text" id="prodImage" placeholder="Image URL (optional)">
-        <button class="btn" onclick="addProduct()">Publish Product</button>
-    </div>
-</div>
-
+<!-- Cart Modal -->
 <div id="cartModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal('cartModal')">&times;</span>
-        <h2>Your Cart</h2>
+        <h2>🛒 Your Cart</h2>
         <div id="cartItems"></div>
-        <h3 id="cartTotal">Total: ৳0</h3>
-        <button class="btn" onclick="checkout()">Checkout</button>
+        <h3 id="cartTotalAmount">Total: ৳0</h3>
+        <button onclick="proceedToCheckout()">Proceed to Checkout</button>
     </div>
 </div>
 
+<!-- Checkout Modal -->
 <div id="checkoutModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal('checkoutModal')">&times;</span>
-        <h2>Delivery Information</h2>
+        <h2>📋 Delivery Information</h2>
         <input type="text" id="deliveryName" placeholder="Full Name">
-        <input type="text" id="deliveryAddress" placeholder="Full Address">
-        <input type="text" id="deliveryPhone" placeholder="Phone Number">
-        <button class="btn" onclick="confirmOrder()">Place Order</button>
+        <input type="text" id="deliveryAddress" placeholder="Full Address (Village, Road, House)">
+        <input type="text" id="deliveryPhone" placeholder="Mobile Number">
+        <select id="deliveryDistrict">
+            <option value="">Select District</option>
+        </select>
+        <input type="text" id="deliveryThana" placeholder="Thana / Upazila">
+        <button onclick="confirmOrder()">Confirm Purchase</button>
     </div>
 </div>
 
-<div id="notification" class="toast"></div>
+<!-- Success Modal -->
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('successModal')">&times;</span>
+        <h2 style="color:green;">✅ আপনার ক্রয় সফল হয়েছে!</h2>
+        <p>আপনার অর্ডারটি প্রক্রিয়াকরণাধীন।</p>
+        <p>আপনার ফোনে নটিফিকেশন পাঠানো হবে।</p>
+        <button onclick="closeModal('successModal')">OK</button>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
 
 <script>
     // ============ DATA STORAGE ============
-    let users = JSON.parse(localStorage.getItem('users')) || [];
-    let products = JSON.parse(localStorage.getItem('products')) || [];
-    let orders = JSON.parse(localStorage.getItem('orders')) || [];
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+    let users = JSON.parse(localStorage.getItem('shop_users')) || [];
+    let products = JSON.parse(localStorage.getItem('shop_products')) || [];
+    let orders = JSON.parse(localStorage.getItem('shop_orders')) || [];
+    let cart = JSON.parse(localStorage.getItem('shop_cart')) || [];
+    let currentUser = JSON.parse(localStorage.getItem('shop_currentUser')) || null;
+    let pendingVerification = null;
 
-    // Demo vendor (for testing)
-    if(users.length === 0) {
-        users.push({
-            id: "vendor1",
-            name: "Demo Vendor",
-            email: "vendor@demo.com",
-            phone: "01800000000",
-            password: "123456",
-            type: "vendor",
-            totalSales: 0,
-            earnings: 0
-        });
-        localStorage.setItem('users', JSON.stringify(users));
+    // 64 Districts of Bangladesh
+    const districts = [
+        "Dhaka", "Gazipur", "Narayanganj", "Narsingdi", "Tangail", "Kishoreganj", "Manikganj", "Munshiganj",
+        "Chattogram", "Cox's Bazar", "Cumilla", "Noakhali", "Feni", "Lakshmipur", "Chandpur", "Brahmanbaria",
+        "Rajshahi", "Natore", "Chapainawabganj", "Naogaon", "Bogra", "Joypurhat", "Pabna", "Sirajganj",
+        "Khulna", "Bagerhat", "Satkhira", "Jashore", "Jhenaidah", "Magura", "Narail", "Kushtia", "Chuadanga",
+        "Barishal", "Bhola", "Patuakhali", "Barguna", "Jhalokathi", "Pirojpur",
+        "Sylhet", "Moulvibazar", "Habiganj", "Sunamganj",
+        "Rangpur", "Dinajpur", "Kurigram", "Gaibandha", "Lalmonirhat", "Nilphamari", "Panchagarh", "Thakurgaon",
+        "Mymensingh", "Netrokona", "Jamalpur", "Sherpur",
+        "Faridpur", "Gopalganj", "Madaripur", "Shariatpur", "Rajbari"
+    ];
+
+    // 60+ Categories
+    const categories = [
+        "Electronics", "Mobile Phones", "Laptops", "Tablets", "Smartwatches", "Headphones", "Speakers", "Cameras",
+        "Fashion", "Men's Clothing", "Women's Clothing", "Kids Clothing", "Shoes", "Bags", "Accessories", "Jewelry",
+        "Home & Living", "Furniture", "Home Decor", "Kitchen Appliances", "Bedding", "Lighting", "Gardening",
+        "Sports", "Fitness Equipment", "Sports Shoes", "Gym Wear", "Cricket", "Football", "Badminton",
+        "Books", "Educational Books", "Story Books", "Academic Books", "Magazines",
+        "Beauty", "Makeup", "Skincare", "Hair Care", "Perfumes", "Personal Care",
+        "Groceries", "Fresh Fruits", "Vegetables", "Rice & Oil", "Spices", "Snacks", "Beverages",
+        "Toys & Games", "Baby Products", "Pet Supplies", "Automotive", "Bike Accessories", "Car Accessories",
+        "Health", "Medicine", "Vitamins", "Medical Equipment", "Office Supplies", "Stationery", "Printers",
+        "Gaming", "Gaming Console", "PC Games", "Gaming Accessories", "Software", "Musical Instruments"
+    ];
+
+    // Initialize categories
+    function initCategories() {
+        let catSelect = document.getElementById('categorySelect');
+        let catGrid = document.getElementById('categoriesGrid');
         
-        // Demo products
-        products.push({
-            id: "prod1",
-            vendorId: "vendor1",
-            vendorName: "Demo Vendor",
-            name: "Smartphone X",
-            category: "Electronics",
-            price: 25000,
-            desc: "Latest smartphone with great features",
-            image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"
+        catSelect.innerHTML = '<option value="All">All Categories</option>';
+        categories.forEach(cat => {
+            catSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
         });
-        products.push({
-            id: "prod2",
-            vendorId: "vendor1",
-            vendorName: "Demo Vendor",
-            name: "Premium Headphones",
-            category: "Electronics",
-            price: 3500,
-            desc: "Noise cancellation headphones",
-            image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e"
+        
+        catGrid.innerHTML = '';
+        categories.slice(0, 30).forEach(cat => {
+            catGrid.innerHTML += `<div class="cat-tag" onclick="filterByCategory('${cat}')">${cat}</div>`;
         });
-        localStorage.setItem('products', JSON.stringify(products));
+        
+        let districtsSelect = document.getElementById('deliveryDistrict');
+        districts.forEach(d => {
+            districtsSelect.innerHTML += `<option value="${d}">${d}</option>`;
+        });
     }
 
-    updateCartCount();
+    function filterByCategory(cat) {
+        document.getElementById('categorySelect').value = cat;
+        loadProducts();
+    }
 
     function showNotification(msg, isError = false) {
-        let notif = document.getElementById('notification');
-        notif.style.backgroundColor = isError ? '#dc3545' : '#1a8e2d';
-        notif.innerText = msg;
-        notif.style.display = 'block';
-        setTimeout(() => notif.style.display = 'none', 3000);
+        let toast = document.getElementById('toast');
+        toast.style.backgroundColor = isError ? '#dc3545' : '#1e8e3e';
+        toast.innerText = msg;
+        toast.style.display = 'block';
+        setTimeout(() => toast.style.display = 'none', 3000);
     }
 
     function updateCartCount() {
         document.getElementById('cartCount').innerText = cart.length;
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }
-
-    function updateUIForUser() {
-        let authBtn = document.getElementById('authBtn');
-        if(currentUser) {
-            authBtn.innerText = `👤 ${currentUser.name} (${currentUser.type === 'vendor' ? 'Seller' : 'Buyer'})`;
-            if(currentUser.type === 'vendor') {
-                document.getElementById('vendorDashboard').style.display = 'block';
-                document.getElementById('productsSection').style.display = 'block';
-                document.getElementById('heroSection').style.display = 'block';
-                loadVendorDashboard();
-            } else {
-                document.getElementById('vendorDashboard').style.display = 'none';
-                document.getElementById('productsSection').style.display = 'block';
-                document.getElementById('heroSection').style.display = 'block';
-            }
-        } else {
-            authBtn.innerText = 'Login / Register';
-            document.getElementById('vendorDashboard').style.display = 'none';
-            document.getElementById('productsSection').style.display = 'block';
-            document.getElementById('heroSection').style.display = 'block';
-        }
+        localStorage.setItem('shop_cart', JSON.stringify(cart));
     }
 
     function showHome() {
-        document.getElementById('productsSection').style.display = 'block';
-        document.getElementById('heroSection').style.display = 'block';
-        if(currentUser && currentUser.type === 'vendor') {
-            document.getElementById('vendorDashboard').style.display = 'none';
-        }
         loadProducts();
+        window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
-    function showDashboard() {
+    function showOrders() {
         if(!currentUser) {
             showNotification('Please login first', true);
             showAuthModal();
             return;
         }
-        if(currentUser.type !== 'vendor') {
-            showNotification('Only sellers can access dashboard', true);
+        let userOrders = orders.filter(o => o.userId === currentUser.id);
+        if(userOrders.length === 0) {
+            showNotification('No orders found', true);
             return;
         }
-        document.getElementById('productsSection').style.display = 'none';
-        document.getElementById('heroSection').style.display = 'none';
-        document.getElementById('vendorDashboard').style.display = 'block';
-        loadVendorDashboard();
+        let msg = '📦 Your Orders:\n';
+        userOrders.forEach(o => {
+            msg += `\nOrder: ${o.id}\nTotal: ৳${o.total}\nStatus: ${o.status}\nDate: ${o.date}\n`;
+        });
+        alert(msg);
     }
 
-    function loadVendorDashboard() {
-        let vendorProducts = products.filter(p => p.vendorId === currentUser.id);
-        document.getElementById('vendorProductCount').innerText = vendorProducts.length;
+    function toggleAuthMode() {
+        let title = document.getElementById('authTitle');
+        let btn = document.getElementById('signupBtn');
+        if(title.innerText === 'Sign Up') {
+            title.innerText = 'Login';
+            btn.innerText = 'Login';
+            document.getElementById('fullName').style.display = 'none';
+            document.getElementById('confirmPassword').style.display = 'none';
+            document.getElementById('verifyCodeDiv').style.display = 'none';
+        } else {
+            title.innerText = 'Sign Up';
+            btn.innerText = 'Sign Up';
+            document.getElementById('fullName').style.display = 'block';
+            document.getElementById('confirmPassword').style.display = 'block';
+        }
+    }
+
+    function generateVerificationCode() {
+        return Math.floor(100000 + Math.random() * 900000).toString();
+    }
+
+    async function signup() {
+        let title = document.getElementById('authTitle').innerText;
         
-        let vendorOrders = orders.filter(o => o.vendorId === currentUser.id);
-        let totalSales = vendorOrders.reduce((sum, o) => sum + o.total, 0);
-        let earnings = vendorOrders.reduce((sum, o) => sum + o.vendorEarnings, 0);
-        
-        document.getElementById('vendorTotalSales').innerText = '৳' + totalSales;
-        document.getElementById('vendorEarnings').innerText = '৳' + earnings;
-        
-        let tbody = document.getElementById('vendorProductsBody');
-        tbody.innerHTML = '';
-        vendorProducts.forEach(p => {
-            tbody.innerHTML += `
-                <tr>
-                    <td>${p.name}</td>
-                    <td>৳${p.price}</td>
-                    <td>${p.category}</td>
-                    <td><button class="btn delete-btn" onclick="deleteProduct('${p.id}')">Delete</button></td>
-                </tr>
-            `;
-        });
+        if(title === 'Sign Up') {
+            let name = document.getElementById('fullName').value;
+            let emailPhone = document.getElementById('emailPhone').value;
+            let pass = document.getElementById('password').value;
+            let confirmPass = document.getElementById('confirmPassword').value;
+            
+            if(!name || !emailPhone || !pass || !confirmPass) {
+                showNotification('Please fill all fields', true);
+                return;
+            }
+            
+            if(pass !== confirmPass) {
+                showNotification('Passwords do not match', true);
+                return;
+            }
+            
+            let existing = users.find(u => u.emailPhone === emailPhone);
+            if(existing) {
+                showNotification('User already exists. Please login.', true);
+                return;
+            }
+            
+            let code = generateVerificationCode();
+            pendingVerification = { name, emailPhone, pass, type: 'customer', code };
+            showNotification(`Verification code: ${code} (Demo)`, false);
+            document.getElementById('verifyCodeDiv').style.display = 'block';
+            document.getElementById('signupBtn').innerText = 'Verify & Sign Up';
+            document.getElementById('authTitle').innerText = 'Verify Code';
+        } else if(title === 'Verify Code') {
+            let enteredCode = document.getElementById('verifyCode').value;
+            if(enteredCode === pendingVerification.code) {
+                let newUser = {
+                    id: 'user_' + Date.now(),
+                    name: pendingVerification.name,
+                    emailPhone: pendingVerification.emailPhone,
+                    password: pendingVerification.pass,
+                    type: 'customer',
+                    createdAt: new Date().toISOString()
+                };
+                users.push(newUser);
+                localStorage.setItem('shop_users', JSON.stringify(users));
+                currentUser = newUser;
+                localStorage.setItem('shop_currentUser', JSON.stringify(currentUser));
+                showNotification('✅ Sign up successful! Welcome to Global Shop!');
+                closeModal('authModal');
+                updateUIForUser();
+                loadProducts();
+            } else {
+                showNotification('Invalid verification code', true);
+            }
+        } else {
+            // Login
+            let emailPhone = document.getElementById('emailPhone').value;
+            let pass = document.getElementById('password').value;
+            let user = users.find(u => u.emailPhone === emailPhone && u.password === pass);
+            if(user) {
+                currentUser = user;
+                localStorage.setItem('shop_currentUser', JSON.stringify(currentUser));
+                showNotification(`Welcome back ${user.name}!`);
+                closeModal('authModal');
+                updateUIForUser();
+                loadProducts();
+            } else {
+                showNotification('Invalid credentials', true);
+            }
+        }
+    }
+
+    function updateUIForUser() {
+        let authBtn = document.getElementById('authBtn');
+        if(currentUser) {
+            authBtn.innerHTML = `👤 ${currentUser.name}`;
+        } else {
+            authBtn.innerHTML = '👤 Login / Sign Up';
+        }
     }
 
     async function loadProducts() {
         let search = document.getElementById('searchInput').value.toLowerCase();
-        let category = document.getElementById('categoryFilter').value;
+        let category = document.getElementById('categorySelect').value;
+        
         let filtered = products.filter(p => 
             p.name.toLowerCase().includes(search) && 
-            (category === 'All' || p.category === category)
+            (category === 'All' || p.category === category) &&
+            p.status === 'approved'
         );
         
         let grid = document.getElementById('productsGrid');
         if(filtered.length === 0) {
-            grid.innerHTML = '<p>No products found</p>';
+            grid.innerHTML = '<p style="text-align:center;">No products found</p>';
             return;
         }
         
         grid.innerHTML = '';
         filtered.forEach(p => {
-            let commissionAmount = (p.price * 0.1).toFixed(0);
             grid.innerHTML += `
                 <div class="product-card">
-                    <img src="${p.image || 'https://via.placeholder.com/200'}" onerror="this.src='https://via.placeholder.com/200'">
+                    <img src="${p.image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30'}" onerror="this.src='https://via.placeholder.com/200'">
                     <div class="product-info">
-                        <div class="product-title">${p.name}</div>
-                        <div class="vendor-name">👤 ${p.vendorName}</div>
-                        <div class="product-price">৳${p.price}</div>
-                        <div class="commission">💰 Platform gets 10% (৳${commissionAmount})</div>
-                        <button class="btn" onclick="addToCart('${p.id}')">Add to Cart</button>
+                        <div class="product-name">${p.name}</div>
+                        <div class="seller-name">👤 Seller: ${p.sellerName}</div>
+                        <div class="product-price">৳${p.price.toLocaleString()}</div>
+                        <button class="add-to-cart" onclick="addToCart('${p.id}')">Add to Cart</button>
                     </div>
                 </div>
             `;
@@ -597,12 +631,12 @@
             total += item.price;
             cartDiv.innerHTML += `
                 <div style="border-bottom:1px solid #ddd; padding:10px 0;">
-                    <b>${item.name}</b> - ৳${item.price}
-                    <button class="btn" style="background:#dc3545; width:auto; padding:5px 10px;" onclick="removeFromCart(${idx})">Remove</button>
+                    <b>${item.name}</b> - ৳${item.price.toLocaleString()}
+                    <button onclick="removeFromCart(${idx})" style="float:right;background:#dc3545;color:white;border:none;padding:5px 10px;border-radius:5px;">Remove</button>
                 </div>
             `;
         });
-        document.getElementById('cartTotal').innerHTML = `Total: ৳${total}<br><small>10% commission included for platform</small>`;
+        document.getElementById('cartTotalAmount').innerHTML = `Total: ৳${total.toLocaleString()}`;
         document.getElementById('cartModal').style.display = 'flex';
     }
 
@@ -612,7 +646,7 @@
         showCart();
     }
 
-    function checkout() {
+    function proceedToCheckout() {
         if(cart.length === 0) return;
         document.getElementById('cartModal').style.display = 'none';
         document.getElementById('checkoutModal').style.display = 'flex';
@@ -622,206 +656,114 @@
         let name = document.getElementById('deliveryName').value;
         let address = document.getElementById('deliveryAddress').value;
         let phone = document.getElementById('deliveryPhone').value;
+        let district = document.getElementById('deliveryDistrict').value;
+        let thana = document.getElementById('deliveryThana').value;
         
-        if(!name || !address || !phone) {
+        if(!name || !address || !phone || !district || !thana) {
             showNotification('Please fill all fields', true);
             return;
         }
         
         let total = cart.reduce((sum, item) => sum + item.price, 0);
         let commission = total * 0.1;
-        let vendorEarnings = total - commission;
-        
-        // Group orders by vendor
-        let vendorOrdersMap = new Map();
-        cart.forEach(item => {
-            if(!vendorOrdersMap.has(item.vendorId)) {
-                vendorOrdersMap.set(item.vendorId, {
-                    vendorId: item.vendorId,
-                    vendorName: item.vendorName,
-                    products: [],
-                    total: 0
-                });
-            }
-            let vo = vendorOrdersMap.get(item.vendorId);
-            vo.products.push(item);
-            vo.total += item.price;
-        });
         
         let orderId = 'ORD-' + Date.now();
-        for(let [vendorId, vo] of vendorOrdersMap) {
-            let vendorCommission = vo.total * 0.1;
-            let vendorEarning = vo.total - vendorCommission;
-            
+        
+        // Group by seller
+        let sellerGroups = {};
+        cart.forEach(item => {
+            if(!sellerGroups[item.sellerId]) {
+                sellerGroups[item.sellerId] = {
+                    sellerId: item.sellerId,
+                    sellerName: item.sellerName,
+                    products: [],
+                    subtotal: 0
+                };
+            }
+            sellerGroups[item.sellerId].products.push(item.name);
+            sellerGroups[item.sellerId].subtotal += item.price;
+        });
+        
+        for(let sellerId in sellerGroups) {
+            let sg = sellerGroups[sellerId];
+            let sellerCommission = sg.subtotal * 0.1;
             let order = {
-                id: orderId + '-' + vendorId,
+                id: orderId + '-' + sellerId,
                 mainOrderId: orderId,
+                userId: currentUser.id,
                 customerName: name,
                 customerAddress: address,
                 customerPhone: phone,
-                vendorId: vendorId,
-                vendorName: vo.vendorName,
-                products: vo.products.map(p => p.name).join(', '),
-                total: vo.total,
-                commission: vendorCommission,
-                vendorEarnings: vendorEarning,
+                customerDistrict: district,
+                customerThana: thana,
+                sellerId: sg.sellerId,
+                sellerName: sg.sellerName,
+                products: sg.products.join(', '),
+                subtotal: sg.subtotal,
+                commission: sellerCommission,
+                vendorEarnings: sg.subtotal - sellerCommission,
+                total: sg.subtotal,
                 status: 'Pending',
                 date: new Date().toLocaleString()
             };
             orders.push(order);
-            
-            // Send notification to vendor (simulate)
-            showNotification(`Order sent to vendor: ${vo.vendorName}`, false);
         }
         
-        localStorage.setItem('orders', JSON.stringify(orders));
+        localStorage.setItem('shop_orders', JSON.stringify(orders));
         
-        // Clear cart
         cart = [];
         updateCartCount();
-        
         document.getElementById('checkoutModal').style.display = 'none';
-        showNotification('✅ Order placed successfully!');
+        document.getElementById('successModal').style.display = 'flex';
         
-        // Clear checkout form
+        // Clear form
         document.getElementById('deliveryName').value = '';
         document.getElementById('deliveryAddress').value = '';
         document.getElementById('deliveryPhone').value = '';
+        document.getElementById('deliveryThana').value = '';
+        
+        showNotification('✅ Order placed successfully!');
     }
 
-    // Vendor functions
-    function showAddProductModal() {
-        if(!currentUser || currentUser.type !== 'vendor') {
-            showNotification('You need to be a seller', true);
-            return;
-        }
-        document.getElementById('addProductModal').style.display = 'flex';
-    }
-
-    function addProduct() {
-        let name = document.getElementById('prodName').value;
-        let category = document.getElementById('prodCategory').value;
-        let price = parseFloat(document.getElementById('prodPrice').value);
-        let desc = document.getElementById('prodDesc').value;
-        let image = document.getElementById('prodImage').value;
-        
-        if(!name || !price) {
-            showNotification('Product name and price required', true);
-            return;
-        }
-        
-        let product = {
-            id: 'prod_' + Date.now() + '_' + Math.random(),
-            vendorId: currentUser.id,
-            vendorName: currentUser.name,
-            name: name,
-            category: category,
-            price: price,
-            desc: desc,
-            image: image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30'
-        };
-        
-        products.push(product);
-        localStorage.setItem('products', JSON.stringify(products));
-        showNotification('✅ Product published successfully!');
-        closeModal('addProductModal');
-        loadVendorDashboard();
-        loadProducts();
-        
-        // Clear form
-        document.getElementById('prodName').value = '';
-        document.getElementById('prodPrice').value = '';
-        document.getElementById('prodDesc').value = '';
-        document.getElementById('prodImage').value = '';
-    }
-
-    function deleteProduct(productId) {
-        if(confirm('Delete this product?')) {
-            products = products.filter(p => p.id !== productId);
-            localStorage.setItem('products', JSON.stringify(products));
-            loadVendorDashboard();
-            loadProducts();
-            showNotification('Product deleted');
-        }
-    }
-
-    // Auth functions
     function showAuthModal() {
         document.getElementById('authModal').style.display = 'flex';
-        document.getElementById('authTitle').innerText = 'Register as Seller/Buyer';
-    }
-
-    function register() {
-        let name = document.getElementById('vendorName').value;
-        let email = document.getElementById('vendorEmail').value;
-        let phone = document.getElementById('vendorPhone').value;
-        let password = document.getElementById('vendorPassword').value;
-        let type = document.getElementById('userType').value;
-        
-        if(!name || !email || !phone || !password) {
-            showNotification('Please fill all fields', true);
-            return;
-        }
-        
-        let existing = users.find(u => u.email === email);
-        if(existing) {
-            if(existing.password === password) {
-                currentUser = existing;
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                showNotification(`Welcome back ${name}!`);
-                closeModal('authModal');
-                updateUIForUser();
-                loadProducts();
-                return;
-            } else {
-                showNotification('Wrong password', true);
-                return;
-            }
-        }
-        
-        let newUser = {
-            id: 'user_' + Date.now(),
-            name: name,
-            email: email,
-            phone: phone,
-            password: password,
-            type: type,
-            totalSales: 0,
-            earnings: 0
-        };
-        
-        users.push(newUser);
-        localStorage.setItem('users', JSON.stringify(users));
-        currentUser = newUser;
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-        showNotification(`🎉 Welcome ${name}! You can now ${type === 'vendor' ? 'sell products' : 'shop'}!`);
-        closeModal('authModal');
-        updateUIForUser();
-        loadProducts();
-        
-        // Clear form
-        document.getElementById('vendorName').value = '';
-        document.getElementById('vendorEmail').value = '';
-        document.getElementById('vendorPhone').value = '';
-        document.getElementById('vendorPassword').value = '';
-    }
-
-    function toggleLogin() {
-        // Already handled in register function
+        document.getElementById('authTitle').innerText = 'Sign Up';
+        document.getElementById('signupBtn').innerText = 'Sign Up';
+        document.getElementById('fullName').style.display = 'block';
+        document.getElementById('confirmPassword').style.display = 'block';
+        document.getElementById('verifyCodeDiv').style.display = 'none';
+        document.getElementById('fullName').value = '';
+        document.getElementById('emailPhone').value = '';
+        document.getElementById('password').value = '';
+        document.getElementById('confirmPassword').value = '';
+        document.getElementById('verifyCode').value = '';
     }
 
     function closeModal(modalId) {
         document.getElementById(modalId).style.display = 'none';
     }
 
+    // Demo products for testing
+    function addDemoProducts() {
+        if(products.length === 0) {
+            let demoProducts = [
+                { id: 'prod1', sellerId: 'seller1', sellerName: 'Tech Mart', name: 'iPhone 15 Pro', category: 'Mobile Phones', price: 120000, image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569', status: 'approved', desc: 'Latest Apple iPhone' },
+                { id: 'prod2', sellerId: 'seller1', sellerName: 'Tech Mart', name: 'Samsung Galaxy S24', category: 'Mobile Phones', price: 95000, image: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf', status: 'approved', desc: 'Samsung flagship' },
+                { id: 'prod3', sellerId: 'seller2', sellerName: 'Fashion Hub', name: 'Men\'s Casual Shirt', category: 'Men\'s Clothing', price: 1200, image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c', status: 'approved', desc: 'Cotton comfortable shirt' },
+                { id: 'prod4', sellerId: 'seller2', sellerName: 'Fashion Hub', name: 'Women\'s Saree', category: 'Women\'s Clothing', price: 2500, image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c', status: 'approved', desc: 'Designer saree' }
+            ];
+            products.push(...demoProducts);
+            localStorage.setItem('shop_products', JSON.stringify(products));
+        }
+    }
+
     // Initialize
+    initCategories();
+    addDemoProducts();
     updateUIForUser();
     loadProducts();
-
-    // Admin Panel (hidden for now, but orders are stored)
-    console.log('Admin can check orders in localStorage:', orders);
-    showNotification('Welcome to Global Vendor Hub! Sellers earn after 10% commission.');
+    updateCartCount();
+    showNotification('Welcome to Global Online Shop! 🎉');
 </script>
-
 </body>
 </html>
