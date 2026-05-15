@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard - Global Online Shop</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+        body{background:#f0f2f5}
+        .sidebar{position:fixed;left:0;top:0;width:260px;height:100%;background:linear-gradient(135deg,#1e8e3e,#0d5c1a);color:white;padding:20px}
+        .sidebar h2{text-align:center;margin-bottom:30px}
+        .sidebar a{display:block;color:white;text-decoration:none;padding:12px;margin:8px 0;border-radius:8px;transition:background 0.3s}
+        .sidebar a:hover,.sidebar a.active{background:rgba(255,255,255,0.2)}
+        .main{margin-left:260px;padding:20px}
+        .header{background:white;padding:20px;border-radius:12px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}
+        .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-bottom:20px}
+        .stat-card{background:white;padding:25px;border-radius:12px;text-align:center}
+        .stat-card h2{color:#1e8e3e;font-size:2rem}
+        .card{background:white;border-radius:12px;padding:20px;margin-bottom:20px}
+        input,select,textarea{width:100%;padding:12px;margin:10px 0;border:1px solid #ddd;border-radius:8px}
+        button{background:#1e8e3e;color:white;border:none;padding:12px 20px;border-radius:8px;cursor:pointer}
+        table{width:100%;border-collapse:collapse}
+        th,td{padding:12px;text-align:left;border-bottom:1px solid #eee}
+        th{background:#1e8e3e;color:white}
+        .delete-btn{background:#dc3545;padding:5px 10px}
+        .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;justify-content:center;align-items:center}
+        .modal-content{background:white;padding:30px;border-radius:12px;max-width:500px;width:90%}
+        .toast{position:fixed;bottom:20px;right:20px;background:#1e8e3e;color:white;padding:12px 20px;border-radius:8px;display:none;z-index:2000}
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>🛒 Seller Panel</h2>
+    <a href="#" onclick="showDashboard()" class="active">📊 Dashboard</a>
+    <a href="#" onclick="showProducts()">📦 My Products</a>
+    <a href="#" onclick="showOrders()">📋 Orders</a>
+    <a href="#" onclick="addProduct()">➕ Add Product</a>
+    <a href="#" onclick="logout()">🚪 Logout</a>
+</div>
+
+<div class="main">
+    <div class="header">
+        <h1>Seller Dashboard</h1>
+        <div id="sellerInfo"></div>
+    </div>
+
+    <div class="stats">
+        <div class="stat-card"><h2 id="totalOrders">0</h2><p>Total Orders</p></div>
+        <div class="stat-card"><h2 id="totalSales">৳0</h2><p>Total Sales</p></div>
+        <div class="stat-card"><h2 id="totalEarnings">৳0</h2><p>Your Earnings (After 10%)</p></div>
+    </div>
+
+    <div class="card">
+        <h3>📅 Search Orders by Date</h3>
+        <input type="date" id="searchDate">
+        <button onclick="searchOrdersByDate()">Search Orders</button>
+        <div id="dateSearchResult" style="margin-top:20px;"></div>
+    </div>
+
+    <div class="card" id="productsSection" style="display:none;">
+        <h3>Your Products</h3>
+        <div id="productsList"></div>
+    </div>
+
+    <div class="card" id="ordersSection" style="display:none;">
+        <h3>All Orders</h3>
+        <div id="allOrdersList"></div>
+    </div>
+
+    <div class="card" id="addProductSection" style="display:none;">
+        <h3>Add New Product</h3>
+        <input type="text" id="prodName" placeholder="Product Name">
+        <select id="prodCategory"></select>
+        <input type="number" id="prodPrice" placeholder="Price (৳)">
+        <textarea id="prodDesc" rows="3" placeholder="Product Description"></textarea>
+        <input type="text" id="prodImage" placeholder="Image URL">
+        <button onclick="publishProduct()">Publish Product</button>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+    let currentSeller = JSON.parse(localStorage.getItem('shop_currentSeller')) || null;
+    let products = JSON.parse(localStorage.getItem('shop_products')) || [];
+    let orders = JSON.parse(localStorage.getItem('shop_orders')) || [];
+    let users = JSON.parse(localStorage.getItem('shop_users')) || [];
+
+    const categories = ["Electronics","Mobile Phones","Laptops","Fashion","Men's Clothing","Women's Clothing","Shoes","Home & Living","Sports","Books","Beauty","Groceries","Toys","Health","Gaming"];
+
+    function initCategories() {
+        let select = document.getElementById('prodCategory');
+        select.innerHTML = '';
+        categories.forEach(cat => {
+            select.innerHTML += `<option value="${cat}">${cat}</option>`;
+        });
+    }
+
+    function checkAuth() {
+        if(!currentSeller) {
+            showLoginModal();
+            return false;
+        }
+        document.getElementById('sellerInfo').innerHTML = `👤 ${currentSeller.name}<br>📞 ${currentSeller.phone}`;
+        return true;
+    }
+
+    function showLoginModal() {
+        let modalHtml = `
+            <div id="loginModal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:3000;display:flex;justify-content:center;align-items:center;">
+                <div style="background:white;padding:30px;border-radius:12px;max-width:400px;width:90%;">
+                    <h2>Seller Login / Sign Up</h2>
+                    <input type="text" id="sellerName" placeholder="Full Name">
+                    <input type="text" id="sellerPhone" placeholder="Phone Number">
+                    <input type="password" id="sellerPass" placeholder="Password">
+                    <input type="password" id="sellerConfirmPass" placeholder="Confirm Password">
+                    <div id="verifyDiv" style="display:none;"><input type="text" id="verifyCode" placeholder="Verification Code"></div>
+                    <button id="authBtn" onclick="sellerSignup()">Sign Up</button>
+                    <p style="margin-top:10px;"><a href="#" onclick="toggleSellerAuth()">Already have account? Login</a></p>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+    }
+
+    let sellerPendingVerify = null;
+    let sellerAuthMode = 'signup';
+
+    function toggleSellerAuth() {
+        let btn = document.getElementById('authBtn');
+        let title = document.querySelector('#loginModal h2');
+        if(sellerAuthMode === 'signup') {
+            sellerAuthMode = 'login';
+            title.innerText = 'Seller Login';
+            btn.innerText = 'Login';
+            document.getElementById('sellerName').style.display = 'none';
+            document.getElementById('sellerConfirmPass').style.display = 'none';
+            document.getElementById('verifyDiv').style.display = 'none';
+        } else {
+            sellerAuthMode = 'signup';
+            title.innerText = 'Seller Sign Up';
+            btn.innerText = 'Sign Up';
+            document.getElementById('sellerName').style.display = 'block';
+            document.getElementById('sellerConfirmPass').style.display = 'block';
+        }
+    }
+
+    window.sellerSignup = async function() {
+        if(sellerAuthMode === 'signup') {
+            let name = document.getElementById('sellerName').value;
+            let phone = document.getElementById('sellerPhone').value;
+            let pass = document.getElementById('sellerPass').value;
+            let confirm = document.getElementById('sellerConfirmPass').value;
+            
+            if(!name || !phone || !pass || !confirm) {
+                alert('Please fill all fields');
+                return;
+            }
+            if(pass !== confirm) {
+                alert('Passwords do not match');
+                return;
+            }
+            let existing = users.find(u => u.emailPhone === phone);
+            if(existing) {
+                alert('Phone number already registered');
+                return;
+            }
+            let code = Math.floor(100000 + Math.random() * 900000);
+            sellerPendingVerify = { name, phone, pass, type: 'seller', code };
+            alert(`Verification Code: ${code}`);
+            document.getElementById('verifyDiv').style.display = 'block';
+            document.getElementById('authBtn').innerText = 'Verify';
+        } else if(document.querySelector('#loginModal h2').innerText === 'Verify Code') {
+            let entered = document.getElementById('verifyCode').value;
+            if(entered == sellerPendingVerify.code) {
+                let newSeller = {
+                    id: 'seller_' + Date.now(),
+                    name: sellerPendingVerify.name,
+                    emailPhone: sellerPendingVerify.phone,
+                    password: sellerPendingVerify.pass,
+                    type: 'seller',
+                    createdAt: new Date().toISOString()
+                };
+                users.push(newSeller);
+                localStorage.setItem('shop_users', JSON.stringify(users));
+                currentSeller = newSeller;
+                localStorage.setItem('shop_currentSeller', JSON.stringify(currentSeller));
+                document.getElementById('loginModal').remove();
+                showNotification('✅ Seller account created!');
+                location.reload();
+            } else {
+                alert('Invalid code');
+            }
+        } else {
+            let phone = document.getElementById('sellerPhone').value;
+            let pass = document.getElementById('sellerPass').value;
+            let seller = users.find(u => u.emailPhone === phone && u.password === pass && u.type === 'seller');
+            if(seller) {
+                currentSeller = seller;
+                localStorage.setItem('shop_currentSeller', JSON.stringify(currentSeller));
+                document.getElementById('loginModal').remove();
+                showNotification('✅ Login successful!');
+                location.reload();
+            } else {
+                alert('Invalid credentials');
+            }
+        }
+    }
+
+    function showNotification(msg) {
+        let toast = document.getElementById('toast');
+        toast.innerText = msg;
+        toast.style.display = 'block';
+        setTimeout(() => toast.style.display = 'none', 3000);
+    }
+
+    function showDashboard() {
+        if(!checkAuth()) return;
+        document.getElementById('productsSection').style.display = 'none';
+        document.getElementById('ordersSection').style.display = 'none';
+        document.getElementById('addProductSection').style.display = 'none';
+        loadStats();
+    }
+
+    function loadStats() {
+        let sellerOrders = orders.filter(o => o.sellerId === currentSeller.id);
+        let totalOrd = sellerOrders.length;
+        let totalSales = sellerOrders.reduce((sum, o) => sum + o.subtotal, 0);
+        let totalEarn = sellerOrders.reduce((sum, o) => sum + o.vendorEarnings, 0);
+        
+        document.getElementById('totalOrders').innerText = totalOrd;
+        document.getElementById('totalSales').innerText = '৳' + totalSales.toLocaleString();
+        document.getElementById('totalEarnings').innerText = '৳' + totalEarn.toLocaleString();
+    }
+
+    function showProducts() {
+        if(!checkAuth()) return;
+        document.getElementById('productsSection').style.display = 'block';
+        document.getElementById('ordersSection').style.display = 'none';
+        document.getElementById('addProductSection').style.display = 'none';
+        
+        let sellerProds = products.filter(p => p.sellerId === currentSeller.id);
+        let html = '<table><tr><th>Image</th><th>Name</th><th>Price</th><th>Status</th><th>Action</th></tr>';
+        sellerProds.forEach(p => {
+            html += `<tr>
+                <td><img src="${p.image || 'https://via.placeholder.com/50'}" width="50"></td>
+                <td>${p.name}</td>
+                <td>৳${p.price}</td>
+                <td>${p.status || 'pending'}</td>
+                <td><button class="delete-btn" onclick="deleteProduct('${p.id}')">Delete</button></td>
+            </tr>`;
+        });
+        html += '</table>';
+        document.getElementById('productsList').innerHTML = html;
+    }
+
+    function showOrders() {
+        if(!checkAuth()) return;
+        document.getElementById('productsSection').style.display = 'none';
+        document.getElementById('ordersSection').style.display = 'block';
+        document.getElementById('addProductSection').style.display = 'none';
+        
+        let sellerOrders = orders.filter(o => o.sellerId === currentSeller.id);
+        let html = '<table><tr><th>Order ID</th><th>Customer</th><th>Products</th><th>Amount</th><th>Commission</th><th>Your Earnings</th><th>Status</th><th>Date</th></tr>';
+        sellerOrders.forEach(o => {
+            html += `<tr>
+                <td>${o.id}</td>
+                <td>${o.customerName}<br>${o.customerPhone}</td>
+                <td>${o.products}</td>
+                <td>৳${o.subtotal}</td>
+                <td>৳${o.commission}</td>
+                <td>৳${o.vendorEarnings}</td>
+                <td>${o.status}</td>
+                <td>${o.date}</td>
+            </tr>`;
+        });
+        html += '</table>';
+        document.getElementById('allOrdersList').innerHTML = html;
+    }
+
+    function searchOrdersByDate() {
+        let date = document.getElementById('searchDate').value;
+        if(!date) {
+            alert('Select a date');
+            return;
+        }
+        let sellerOrders = orders.filter(o => o.sellerId === currentSeller.id && o.date.includes(date));
+        let html = '<h4>Orders on ' + date + '</h4><table><tr><th>Order ID</th><th>Customer</th><th>Amount</th><th>Status</th></tr>';
+        sellerOrders.forEach(o => {
+            html += `<tr><td>${o.id}</td><td>${o.customerName}</td><td>৳${o.subtotal}</td><td>${o.status}</td></tr>`;
+        });
+        html += '</table>';
+        document.getElementById('dateSearchResult').innerHTML = html;
+    }
+
+    function addProduct() {
+        if(!checkAuth()) return;
+        document.getElementById('productsSection').style.display = 'none';
+        document.getElementById('ordersSection').style.display = 'none';
+        document.getElementById('addProductSection').style.display = 'block';
+    }
+
+    function publishProduct() {
+        let name = document.getElementById('prodName').value;
+        let category = document.getElementById('prodCategory').value;
+        let price = parseFloat(document.getElementById('prodPrice').value);
+        let desc = document.getElementById('prodDesc').value;
+        let image = document.getElementById('prodImage').value;
+        
+        if(!name || !price) {
+            alert('Product name and price required');
+            return;
+        }
+        
+        let product = {
+            id: 'prod_' + Date.now(),
+            sellerId: currentSeller.id,
+            sellerName: currentSeller.name,
+            name: name,
+            category: category,
+            price: price,
+            desc: desc,
+            image: image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30',
+            status: 'approved',
+            createdAt: new Date().toISOString()
+        };
+        
+        products.push(product);
+        localStorage.setItem('shop_products', JSON.stringify(products));
+        showNotification('✅ Product published!');
+        document.getElementById('prodName').value = '';
+        document.getElementById('prodPrice').value = '';
+        document.getElementById('prodDesc').value = '';
+        showProducts();
+    }
+
+    function deleteProduct(productId) {
+        if(confirm('Delete this product?')) {
+            products = products.filter(p => p.id !== productId);
+            localStorage.setItem('shop_products', JSON.stringify(products));
+            showProducts();
+            showNotification('Product deleted');
+        }
+    }
+
+    function logout() {
+        localStorage.removeItem('shop_currentSeller');
+        location.reload();
+    }
+
+    initCategories();
+    if(!currentSeller) {
+        showLoginModal();
+    } else {
+        checkAuth();
+        showDashboard();
+    }
+</script>
+</body>
+</html>
