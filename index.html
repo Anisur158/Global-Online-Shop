@@ -195,7 +195,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAWcW-aciEWiHRdCmqhUMfGM1RImXUoCWo",
+  apiKey: "AIzaSyAlCW-a1EWiHRdCmghUMfGM1RImXUoCWo",
   authDomain: "global-online-shop.firebaseapp.com",
   projectId: "global-online-shop",
   storageBucket: "global-online-shop.firebasestorage.app",
@@ -329,11 +329,11 @@ checkoutModal.style.display="flex";
 window.closeCheckout=function(){checkoutModal.style.display="none"}
 
 window.confirmPurchase=async function(){
-let name=customerName.value;
-let gram=village.value;
+let name=customerName.value.trim();
+let gram=village.value.trim();
 let dis=district.value;
-let tha=thana.value;
-let mob=mobile.value;
+let tha=thana.value.trim();
+let mob=mobile.value.trim();
 let pay=deliveryMethod.value;
 
 if(!name||!gram||!dis||!tha||!mob||!pay){
@@ -352,25 +352,18 @@ let fullAddress=`${gram}, ${tha}, ${dis}`;
 
 let order={
 id:"ORD-"+Date.now(),
-
 name:name,
 customerName:name,
-
 mobile:mob,
-
 village:gram,
 district:dis,
 thana:tha,
 address:fullAddress,
-
 payment:pay,
-
 products:productText,
 product:productText,
-
 total:total,
 status:"Pending",
-
 date:orderDate,
 time:orderTime,
 dateTime:orderDateTime
@@ -378,10 +371,9 @@ dateTime:orderDateTime
 
 try{
 await addDoc(collection(db,"orders"),order);
-console.log("Order saved to Firebase");
 }catch(error){
 console.error("Firebase error:",error);
-alert("Firebase save হয়নি। Rules/Config চেক করুন।");
+alert("Firebase save হয়নি। Firestore Rules/API key চেক করুন।");
 return;
 }
 
@@ -409,7 +401,6 @@ deliveryMethod.value="";
 }
 
 window.closeSuccess=function(){successModal.style.display="none"}
-
 window.darkMode=function(){document.body.classList.toggle("dark")}
 window.openLogin=function(){loginModal.style.display="flex"}
 window.closeLogin=function(){loginModal.style.display="none"}
