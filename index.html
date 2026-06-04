@@ -3,586 +3,449 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Global Online Shop - Multi Vendor Marketplace</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Global Online Shop - পূর্ণাঙ্গ ই-কমার্স</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-        }
-
-        :root {
-            --primary: #131921;
-            --primary-light: #232F3E;
-            --secondary: #FF9900;
-            --secondary-hover: #e68900;
-            --bg-light: #EAEDED;
-            --text-dark: #0F1111;
-            --text-gray: #565959;
-            --border: #ddd;
-            --white: #FFFFFF;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
         }
 
         body {
-            background: var(--bg-light);
+            background: #f4f7fc;
+            color: #1a2a3a;
         }
 
-        /* ========== হেডার ========== */
-        .header-top {
-            background: var(--primary);
-            padding: 10px 20px;
+        /* নীল থিম */
+        :root {
+            --primary: #0a4b8a;
+            --primary-dark: #063a6b;
+            --primary-light: #eef5ff;
+            --accent: #ff9800;
+            --gray-bg: #f9f9f9;
+            --border: #ddd;
+        }
+
+        /* হেডার স্টাইল */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             position: sticky;
             top: 0;
             z-index: 1000;
         }
-
-        .header-container {
-            max-width: 1500px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .logo h1 {
+        .top-bar {
+            background: var(--primary);
             color: white;
-            font-size: 26px;
-        }
-
-        .logo span {
-            color: var(--secondary);
-        }
-
-        .delivery {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: white;
+            padding: 6px 20px;
             font-size: 13px;
-            background: rgba(255,255,255,0.1);
-            padding: 5px 10px;
-            border-radius: 8px;
+            text-align: center;
         }
-
-        .search-bar {
+        .main-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            gap: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: var(--primary);
+            cursor: pointer;
+        }
+        .logo span {
+            color: var(--accent);
+        }
+        .search-area {
             flex: 2;
             display: flex;
-            min-width: 280px;
+            max-width: 500px;
+            position: relative;
         }
-
-        .category-dropdown {
-            padding: 12px;
-            border: none;
-            border-radius: 8px 0 0 8px;
-            background: #f0f2f2;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .search-input {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            font-size: 15px;
+        .search-area input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--border);
+            border-radius: 30px 0 0 30px;
             outline: none;
         }
-
-        .search-btn {
-            background: var(--secondary);
+        .search-area button {
+            background: var(--primary);
             border: none;
-            padding: 0 25px;
-            border-radius: 0 8px 8px 0;
+            padding: 0 18px;
+            color: white;
+            cursor: pointer;
+            border-radius: 0 30px 30px 0;
+        }
+        .voice-btn {
+            background: #eee;
+            border: none;
+            margin-left: 8px;
+            padding: 0 15px;
+            border-radius: 30px;
             cursor: pointer;
             font-size: 18px;
         }
-
-        .search-btn:hover {
-            background: var(--secondary-hover);
-        }
-
-        .header-actions {
+        .nav-icons {
             display: flex;
             gap: 18px;
             align-items: center;
             flex-wrap: wrap;
         }
-
-        .header-actions a, .lang-btn {
-            color: white;
-            text-decoration: none;
-            font-size: 13px;
+        .nav-icons button, .cat-dropdown {
+            background: none;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 5px;
-            background: none;
-            border: none;
-            cursor: pointer;
+            font-weight: 500;
+            color: #2c3e50;
         }
-
-        .lang-btn {
-            background: rgba(255,255,255,0.15);
-            padding: 6px 12px;
-            border-radius: 20px;
+        .nav-icons button:hover {
+            color: var(--primary);
         }
-
-        /* নেভিগেশন বার */
-        .nav-bar {
-            background: var(--primary-light);
-            padding: 8px 20px;
-            overflow-x: auto;
+        /* ক্যাটাগরি ড্রপডাউন */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 1001;
+            border-radius: 8px;
         }
-
-        .nav-container {
-            max-width: 1500px;
-            margin: 0 auto;
-            display: flex;
-            gap: 25px;
-        }
-
-        .nav-container a {
-            color: white;
+        .dropdown-content a {
+            display: block;
+            padding: 8px 16px;
             text-decoration: none;
-            font-size: 14px;
-            white-space: nowrap;
+            color: #333;
+        }
+        .categories-menu:hover .dropdown-content {
+            display: block;
         }
 
-        /* হিরো স্লাইডার */
-        .hero {
-            margin: 20px;
-            overflow: hidden;
-            border-radius: 12px;
+        /* পেজ কন্টেইনার */
+        .page {
+            display: none;
+            padding: 20px;
+            max-width: 1400px;
+            margin: auto;
         }
-
-        .slider {
-            display: flex;
-            transition: transform 0.5s ease;
-        }
-
-        .slide {
-            min-width: 100%;
-            background: linear-gradient(135deg, #1e3a5f, #0a1a2e);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-            font-size: 24px;
-        }
-
-        /* সেকশন স্টাইল */
-        .section {
-            margin: 30px 20px;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .section-header h2 {
-            font-size: 22px;
-            border-left: 5px solid var(--secondary);
-            padding-left: 15px;
+        .active-page {
+            display: block;
         }
 
         /* প্রোডাক্ট গ্রিড */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 20px;
+            margin-top: 20px;
         }
-
         .product-card {
             background: white;
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            transition: all 0.2s;
-            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: 0.2s;
+            position: relative;
         }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-        }
-
-        .product-img {
+        .product-card img {
             width: 100%;
             height: 180px;
             object-fit: contain;
+            cursor: pointer;
         }
-
-        .product-title {
-            font-size: 14px;
-            font-weight: 500;
-            margin: 10px 0;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .rating {
-            color: #ffa41c;
-            font-size: 13px;
-        }
-
-        .price {
-            font-size: 20px;
+        .product-name {
             font-weight: bold;
-            color: #B12704;
-            margin: 8px 0;
+            margin: 10px 0 5px;
+            cursor: pointer;
         }
-
-        .old-price {
-            text-decoration: line-through;
-            font-size: 13px;
-            color: gray;
-            margin-left: 8px;
+        .price {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 18px;
         }
-
-        .seller-name {
-            font-size: 12px;
-            color: #007185;
-            margin: 5px 0;
-        }
-
         .card-buttons {
             display: flex;
+            flex-wrap: wrap;
             gap: 8px;
-            margin-top: 10px;
+            margin-top: 12px;
         }
-
-        .add-btn, .buy-btn {
-            flex: 1;
-            padding: 8px;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .add-btn {
-            background: var(--secondary);
-        }
-
-        .buy-btn {
-            background: #ffb347;
-        }
-
-        /* ফুটার */
-        footer {
+        .card-buttons button {
             background: var(--primary-light);
-            color: #ddd;
-            padding: 40px 20px;
-            margin-top: 50px;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
         }
-
-        .footer-content {
-            max-width: 1500px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-        }
-
-        .footer-col h4 {
+        .btn-primary {
+            background: var(--primary);
             color: white;
-            margin-bottom: 15px;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 30px;
+            cursor: pointer;
         }
-
-        .footer-col a {
-            color: #ddd;
-            text-decoration: none;
-            display: block;
-            margin: 8px 0;
-            font-size: 13px;
+        /* ফিল্টার সাইডবার */
+        .filter-sort-bar {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
         }
-
-        /* মোবাইল ডিজাইন */
-        .bottom-nav {
+        /* ফুটার */
+        .footer {
+            background: #1e2a36;
+            color: #ccc;
+            padding: 30px 20px;
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+            gap: 20px;
+        }
+        /* মোবাইল বটম মেনু */
+        .mobile-bottom-menu {
             display: none;
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
             background: white;
-            padding: 10px;
-            justify-content: space-around;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            justify-content: space-around;
+            padding: 10px 0;
             z-index: 1000;
         }
-
-        .bottom-nav a {
-            text-align: center;
-            color: #555;
-            text-decoration: none;
-            font-size: 12px;
-        }
-
-        .loader, .no-products {
-            text-align: center;
-            padding: 50px;
-            grid-column: 1/-1;
-        }
-
         @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-            }
-            .search-bar {
-                width: 100%;
-            }
-            .product-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .bottom-nav {
-                display: flex;
-            }
-            body {
-                margin-bottom: 60px;
-            }
-            .header-actions {
-                display: none;
-            }
+            .main-header { flex-direction: column; align-items: stretch; }
+            .search-area { max-width: 100%; }
+            .nav-icons { justify-content: space-between; }
+            .mobile-bottom-menu { display: flex; }
+            body { padding-bottom: 70px; }
+            .footer { margin-bottom: 50px; }
+        }
+        /* মডাল */
+        .modal {
+            display: none;
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 90%;
+        }
+        button {
+            transition: 0.1s;
         }
     </style>
 </head>
 <body>
 
-<!-- হেডার -->
-<div class="header-top">
-    <div class="header-container">
-        <div class="logo">
-            <h1>Global <span>Online Shop</span></h1>
+<div class="header">
+    <div class="top-bar">⭐ সারা দেশে ফ্রি শিপিং | অর্ডার করুন এখনই</div>
+    <div class="main-header">
+        <div class="logo" id="logoBtn">Global <span>Online Shop</span></div>
+        <div class="search-area">
+            <input type="text" id="searchInput" placeholder="পণ্য, ব্র্যান্ড বা স্টোর খুঁজুন...">
+            <button id="searchBtn">🔍 সার্চ</button>
+            <button id="voiceSearchBtn" class="voice-btn">🎤</button>
         </div>
-        <div class="delivery">
-            <i class="fas fa-map-marker-alt"></i>
-            <span id="deliveryLocation">ঢাকা</span>
-        </div>
-        <div class="search-bar">
-            <select id="categorySelect" class="category-dropdown">
-                <option value="">সব ক্যাটাগরি</option>
-            </select>
-            <input type="text" id="searchInput" class="search-input" placeholder="পণ্য খুঁজুন...">
-            <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i></button>
-        </div>
-        <div class="header-actions">
-            <button class="lang-btn" id="langToggle">🇧🇩 বাংলা</button>
-            <a href="#"><i class="fas fa-user"></i> লগইন</a>
-            <a href="#"><i class="fas fa-heart"></i> উইশলিস্ট</a>
-            <a href="#"><i class="fas fa-bell"></i></a>
-            <a href="#"><i class="fas fa-shopping-cart"></i> কার্ট</a>
+        <div class="nav-icons">
+            <div class="categories-menu" style="position:relative">
+                <button id="categoriesBtn">📂 ক্যাটাগরি</button>
+                <div class="dropdown-content" id="catDropdown">
+                    <a data-cat="electronics">Electronics</a><a data-cat="fashion">Fashion</a><a data-cat="gaming">Gaming</a>
+                    <a data-cat="mobile-accessories">Mobile Accessories</a><a data-cat="home-kitchen">Home & Kitchen</a>
+                    <a data-cat="beauty">Beauty</a><a data-cat="sports">Sports</a><a data-cat="books">Books</a>
+                    <a id="moreCategoriesLink">More Categories ➕</a>
+                </div>
+            </div>
+            <button id="languageBtn">🌐 বাংলা/EN</button>
+            <button id="loginBtn">🔐 লগইন</button>
+            <button id="signupBtn">📝 সাইন আপ</button>
+            <button id="wishlistNavBtn">❤️ উইশলিস্ট</button>
+            <button id="notiNavBtn">🔔 নোটিফিকেশন</button>
+            <button id="myOrdersNavBtn">📦 মাই অর্ডার</button>
+            <button id="cartNavBtn">🛒 কার্ট (<span id="cartCount">0</span>)</button>
+            <button id="accountNavBtn">👤 অ্যাকাউন্ট</button>
         </div>
     </div>
 </div>
 
-<!-- নেভিগেশন -->
-<div class="nav-bar">
-    <div class="nav-container" id="categoryNav">
-        <!-- ক্যাটাগরি লিংক এখানে আসবে -->
+<!-- বিভিন্ন পেজের কন্টেইনার -->
+<div id="homePage" class="page active-page">
+    <div class="filter-sort-bar">
+        <select id="sortSelect"><option value="">সাজান</option><option value="low-high">দাম কম→বেশি</option><option value="high-low">দাম বেশি→কম</option><option value="newest">নতুন</option><option value="popular">জনপ্রিয়</option><option value="rating">সর্বোচ্চ রেটিং</option></select>
+        <button id="filterBtn">⚙️ ফিল্টার</button><button id="clearFilterBtn">🗑️ ক্লিয়ার ফিল্টার</button>
     </div>
+    <div id="bannerSection"><div style="background:#0a4b8a; color:white; padding:30px; border-radius:20px; text-align:center"><h2>বিগ সেল শুরু! ৫০% পর্যন্ত ছাড়</h2><button id="shopNowBannerBtn" class="btn-primary">শপ নাও</button></div></div>
+    <div><h3>🔥 ফ্ল্যাশ সেল</h3><div id="flashSaleGrid" class="product-grid"></div></div>
+    <div><h3>⭐ টুডে'স ডিল</h3><div id="todaysDealsGrid" class="product-grid"></div></div>
+    <div><h3>📈 বেস্ট সেলার</h3><div id="bestSellersGrid" class="product-grid"></div></div>
+    <div><h3>🆕 নিউ অ্যারাইভাল</h3><div id="newArrivalsGrid" class="product-grid"></div></div>
+    <div><h3>✨ ফিচার্ড প্রোডাক্ট</h3><div id="featuredGrid" class="product-grid"></div></div>
+    <div><h3>🎯 রিকমেন্ডেড</h3><div id="recommendedGrid" class="product-grid"></div></div>
+    <button id="viewAllProductsBtn" class="btn-primary" style="margin-top:20px">সব পণ্য দেখুন</button>
+    <button id="viewAllDealsBtn" class="btn-primary">সব অফার দেখুন</button>
 </div>
 
-<!-- হিরো স্লাইডার -->
-<div class="hero">
-    <div class="slider" id="heroSlider">
-        <div class="slide">🛍️ সাপ্তাহিক ফ্ল্যাশ সেল - সীমিত সময়ের অফার!</div>
-        <div class="slide">⚡ বেস্ট সেলিং প্রোডাক্ট - ৫০% ছাড়</div>
-        <div class="slide">🏪 ১০০০+ সেলার জয়েন করুন - বিনামূল্যে স্টোর খুলুন</div>
-    </div>
-</div>
+<div id="productListPage" class="page"><h2>সব পণ্য</h2><div id="allProductsGrid" class="product-grid"></div><button id="seeMoreBtn" class="btn-primary">আরও দেখুন</button></div>
+<div id="productDetailPage" class="page"><div id="productDetailContainer"></div></div>
+<div id="cartPage" class="page"><h2>আপনার কার্ট</h2><div id="cartItemsList"></div><div id="cartSummary"></div><button id="applyCouponCartBtn">কুপন প্রয়োগ</button><button id="clearCartBtn">কার্ট ক্লিয়ার</button><button id="continueShoppingBtn">শপিং চালিয়ে যান</button><button id="checkoutBtn" class="btn-primary">চেকআউট</button></div>
+<div id="checkoutPage" class="page"><h2>চেকআউট</h2><div id="addressSection"></div><div id="paymentMethods"></div><button id="applyCouponCheckoutBtn">কুপন</button><button id="confirmOrderBtn">অর্ডার কনফার্ম</button><button id="backToCartBtn">কার্টে ফিরুন</button></div>
+<div id="wishlistPage" class="page"><h2>উইশলিস্ট</h2><div id="wishlistGrid" class="product-grid"></div><button id="selectAllWishlistBtn">সব সিলেক্ট</button><button id="deleteSelectedWishlistBtn">সিলেক্টেড ডিলিট</button></div>
+<div id="ordersPage" class="page"><h2>আমার অর্ডার</h2><div id="ordersList"></div></div>
+<div id="accountPage" class="page"><h2>অ্যাকাউন্ট ড্যাশবোর্ড</h2><button id="profileBtn">প্রোফাইল</button><button id="changePasswordBtn">পাসওয়ার্ড পরিবর্তন</button><button id="savedAddressesBtn">সংরক্ষিত ঠিকানা</button><button id="logoutBtn">লগআউট</button><button id="supportCenterBtn">সাপোর্ট সেন্টার</button></div>
+<div id="loginPage" class="page"><h2>লগইন</h2><input placeholder="ইমেইল/ফোন"><input placeholder="পাসওয়ার্ড" type="password"><button id="doLoginBtn">লগইন</button><p>নতুন? <button id="goSignupFromLogin">সাইন আপ</button></p></div>
+<div id="signupPage" class="page"><h2>সাইন আপ</h2><input placeholder="পূর্ণ নাম"><input placeholder="ফোন"><input placeholder="ইমেইল"><input placeholder="পাসওয়ার্ড"><button id="doSignupBtn">রেজিস্টার</button></div>
+<div id="notificationsPage" class="page"><h2>নোটিফিকেশন</h2><div id="notiList"></div><button id="markAllReadBtn">সব পড়া হয়েছে</button><button id="deleteAllNotiBtn">সব ডিলিট</button></div>
+<div id="storePage" class="page"><div id="storeContainer"></div></div>
+<div id="comparePage" class="page"><h2>তুলনা লিস্ট</h2><div id="compareList"></div></div>
+<div id="trackOrderPage" class="page"><h2>অর্ডার ট্র্যাক</h2><div id="trackInfo"></div></div>
 
-<!-- প্রোডাক্ট সেকশন -->
-<div class="section">
-    <div class="section-header">
-        <h2 id="sectionTitle">সব পণ্য</h2>
-        <a href="#" class="view-all" style="color:#FF9900;">সব দেখুন →</a>
-    </div>
-    <div id="productContainer" class="product-grid">
-        <div class="loader"><i class="fas fa-spinner fa-pulse"></i> পণ্য লোড হচ্ছে...</div>
-    </div>
+<div class="footer">
+    <div><h4>Global Online Shop</h4><button id="aboutUsBtn">About Us</button><button id="contactUsBtn">Contact</button></div>
+    <div><h4>পলিসি</h4><button id="privacyPolicyBtn">Privacy</button><button id="termsBtn">Terms</button><button id="returnPolicyBtn">Return Policy</button></div>
+    <div><h4>সাপোর্ট</h4><button id="faqBtn">FAQ</button><button id="liveChatSupportBtn">লাইভ চ্যাট</button></div>
+    <div><h4>সোশ্যাল</h4><button id="fbBtn">Facebook</button><button id="ytBtn">YouTube</button><button id="waBtn">WhatsApp</button></div>
 </div>
-
-<!-- মোবাইল বটম নেভিগেশন -->
-<div class="bottom-nav">
-    <a href="#"><i class="fas fa-home"></i><br>হোম</a>
-    <a href="#"><i class="fas fa-th-large"></i><br>ক্যাটাগরি</a>
-    <a href="#"><i class="fas fa-search"></i><br>সার্চ</a>
-    <a href="#"><i class="fas fa-shopping-cart"></i><br>কার্ট</a>
-    <a href="#"><i class="fas fa-user"></i><br>অ্যাকাউন্ট</a>
+<div class="mobile-bottom-menu">
+    <button id="mobileHomeBtn">🏠 হোম</button><button id="mobileCatBtn">📂 ক্যাটাগরি</button><button id="mobileSearchBtn">🔍 সার্চ</button><button id="mobileCartBtn">🛒 কার্ট</button><button id="mobileAccountBtn">👤 অ্যাকাউন্ট</button>
 </div>
-
-<!-- ফুটার -->
-<footer>
-    <div class="footer-content">
-        <div class="footer-col">
-            <h4>আমাদের সম্পর্কে</h4>
-            <a href="#">About Us</a>
-            <a href="#">Contact Us</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms & Conditions</a>
-        </div>
-        <div class="footer-col">
-            <h4>নীতি</h4>
-            <a href="#">Return Policy</a>
-            <a href="#">Seller Policy</a>
-            <a href="#">Delivery Policy</a>
-            <a href="#">Help Center</a>
-        </div>
-        <div class="footer-col">
-            <h4>সোশ্যাল</h4>
-            <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
-            <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
-            <a href="#"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-            <a href="#"><i class="fab fa-telegram"></i> Telegram</a>
-        </div>
-    </div>
-</footer>
 
 <script>
-    // API বেস URL (আপনার ব্যাকএন্ড অনুযায়ী পরিবর্তন করবেন)
-    const API_BASE = '/backend/api.php';
-    
+    // ---------- ডামি প্রোডাক্ট ডেটা ----------
+    let products = [
+        { id:1, name:"iPhone 14", price:899, category:"electronics", isNew:true, isFeatured:true, isBestSeller:true, rating:4.8, image:"https://picsum.photos/id/0/200/200", store:"Apple Store", storeId:"s1" },
+        { id:2, name:"লেদার জ্যাকেট", price:120, category:"fashion", isNew:false, isFeatured:true, rating:4.5, image:"https://picsum.photos/id/20/200/200" },
+        { id:3, name:"গেমিং মাউস", price:35, category:"gaming", isBestSeller:true, rating:4.7, image:"https://picsum.photos/id/1/200/200" },
+        { id:4, name:"ওয়্যারলেস চার্জার", price:25, category:"mobile-accessories", isNew:true, rating:4.3, image:"https://picsum.photos/id/2/200/200" },
+        { id:5, name:"মিক্সার গ্রাইন্ডার", price:85, category:"home-kitchen", isFeatured:true, image:"https://picsum.photos/id/3/200/200" },
+        { id:6, name:"ফেস ক্রিম", price:15, category:"beauty", rating:4.2, image:"https://picsum.photos/id/4/200/200" },
+        { id:7, name:"ফুটবল", price:28, category:"sports", image:"https://picsum.photos/id/5/200/200" },
+        { id:8, name:"হ্যারি পটার বই", price:18, category:"books", image:"https://picsum.photos/id/6/200/200" },
+    ];
+    let cart = [];
+    let wishlist = [];
+    let orders = [];
+    let notifications = [{id:1, msg:"স্বাগতম! কুপন NEW10 ব্যবহার করুন", read:false}];
     let currentLang = 'bn';
-    
-    // ভাষার টেক্সট
-    const translations = {
-        bn: { allCategories: 'সব ক্যাটাগরি', searchPlaceholder: 'পণ্য খুঁজুন...', allProducts: 'সব পণ্য' },
-        en: { allCategories: 'All Categories', searchPlaceholder: 'Search products...', allProducts: 'All Products' }
-    };
-    
-    // পেজ লোড হলে
-    document.addEventListener('DOMContentLoaded', () => {
-        loadCategories();
-        loadProducts();
-        
-        document.getElementById('searchBtn').addEventListener('click', () => {
-            const category = document.getElementById('categorySelect').value;
-            const keyword = document.getElementById('searchInput').value;
-            loadProducts(category, keyword);
-        });
-        
-        document.getElementById('langToggle').addEventListener('click', toggleLanguage);
-        
-        // হিরো স্লাইডার অটো
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const slider = document.getElementById('heroSlider');
-        if(slides.length > 0) {
-            setInterval(() => {
-                currentSlide = (currentSlide + 1) % slides.length;
-                slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-            }, 4000);
-        }
-    });
-    
-    // ক্যাটাগরি লোড
-    async function loadCategories() {
-        try {
-            const response = await fetch(`${API_BASE}?action=getCategories`);
-            const categories = await response.json();
-            
-            const select = document.getElementById('categorySelect');
-            const nav = document.getElementById('categoryNav');
-            
-            select.innerHTML = `<option value="">${translations[currentLang].allCategories}</option>`;
-            nav.innerHTML = '';
-            
-            categories.forEach(cat => {
-                const option = document.createElement('option');
-                option.value = cat.id;
-                option.textContent = cat.name;
-                select.appendChild(option);
-                
-                const link = document.createElement('a');
-                link.href = '#';
-                link.textContent = cat.name;
-                link.onclick = (e) => {
-                    e.preventDefault();
-                    document.getElementById('categorySelect').value = cat.id;
-                    loadProducts(cat.id, document.getElementById('searchInput').value);
-                };
-                nav.appendChild(link);
-            });
-        } catch(error) {
-            console.error('ক্যাটাগরি লোড ব্যর্থ:', error);
-        }
-    }
-    
-    // প্রোডাক্ট লোড (শুধু অনুমোদিত সেলারদের অনুমোদিত প্রোডাক্ট)
-    async function loadProducts(categoryId = '', keyword = '') {
-        const container = document.getElementById('productContainer');
-        container.innerHTML = '<div class="loader"><i class="fas fa-spinner fa-pulse"></i> পণ্য লোড হচ্ছে...</div>';
-        
-        try {
-            let url = `${API_BASE}?action=getProducts`;
-            if(categoryId) url += `&category_id=${categoryId}`;
-            if(keyword) url += `&search=${encodeURIComponent(keyword)}`;
-            
-            const response = await fetch(url);
-            const products = await response.json();
-            
-            if(products.length === 0) {
-                container.innerHTML = '<div class="no-products">🛍️ এখন পর্যন্ত কোনো পণ্য আপলোড হয়নি।<br>সেলাররা পণ্য আপলোড করলে এখানে দেখাবে।</div>';
-                return;
-            }
-            
-            container.innerHTML = '';
-            products.forEach(product => {
-                const discount = product.old_price ? Math.round(((product.old_price - product.price) / product.old_price) * 100) : 0;
-                const rating = product.rating || 4;
-                const stars = '★'.repeat(Math.floor(rating)) + (rating % 1 >= 0.5 ? '½' : '');
-                
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.innerHTML = `
-                    <img src="${product.image || 'https://placehold.co/300x300?text=Image+Pending'}" class="product-img" alt="${product.name}">
-                    <div class="product-title">${escapeHtml(product.name)}</div>
-                    <div class="rating">${stars} ${product.review_count ? `(${product.review_count})` : ''}</div>
-                    <div class="price">
-                        ৳${Number(product.price).toLocaleString()}
-                        ${product.old_price ? `<span class="old-price">৳${Number(product.old_price).toLocaleString()}</span>` : ''}
-                        ${discount > 0 ? `<span style="background:#ffecd6; color:#c45500; font-size:11px; margin-left:6px; padding:2px 6px; border-radius:12px;">-${discount}%</span>` : ''}
-                    </div>
-                    <div class="seller-name"><i class="fas fa-store"></i> ${escapeHtml(product.seller_name)}</div>
-                    <div class="card-buttons">
-                        <button class="add-btn" onclick="addToCart(${product.id})"><i class="fas fa-cart-plus"></i> কার্ট</button>
-                        <button class="buy-btn" onclick="buyNow(${product.id})">কিনুন</button>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        } catch(error) {
-            console.error('প্রোডাক্ট লোড ব্যর্থ:', error);
-            container.innerHTML = '<div class="no-products">সার্ভার সংযোগ সমস্যা, পরে চেষ্টা করুন।</div>';
-        }
-    }
-    
-    function addToCart(id) { alert('কার্টে যোগ হয়েছে! (ব্যাকএন্ড সংযোগের পর সম্পন্ন হবে)'); }
-    function buyNow(id) { alert('অর্ডার করতে লগইন করুন'); }
-    
-    function toggleLanguage() {
-        currentLang = currentLang === 'bn' ? 'en' : 'bn';
-        const btn = document.getElementById('langToggle');
-        btn.innerHTML = currentLang === 'bn' ? '🇧🇩 বাংলা' : '🇬🇧 English';
-        
-        const select = document.getElementById('categorySelect');
-        if(select.options[0]) select.options[0].text = translations[currentLang].allCategories;
-        document.getElementById('searchInput').placeholder = translations[currentLang].searchPlaceholder;
-        document.getElementById('sectionTitle').innerText = translations[currentLang].allProducts;
-        
-        loadCategories();
-        loadProducts();
-    }
-    
-    function escapeHtml(str) {
-        if(!str) return '';
-        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]);
-    }
+    let currentUser = null;
+    let filters = { category:null, minPrice:0, maxPrice:1000 };
+    let compareList = [];
+    let followedStores = [];
+
+    function updateCartCount() { document.getElementById('cartCount').innerText = cart.reduce((s,i)=>s+i.qty,0); saveData(); }
+    function saveData() { localStorage.setItem('cart',JSON.stringify(cart)); localStorage.setItem('wishlist',JSON.stringify(wishlist)); localStorage.setItem('orders',JSON.stringify(orders)); }
+    function loadData() { if(localStorage.cart) cart=JSON.parse(localStorage.cart); if(localStorage.wishlist) wishlist=JSON.parse(localStorage.wishlist); if(localStorage.orders) orders=JSON.parse(localStorage.orders); updateCartCount(); }
+    function showPage(pageId) { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active-page')); document.getElementById(pageId).classList.add('active-page'); window.scrollTo(0,0); }
+    function addNoti(msg) { notifications.unshift({id:Date.now(), msg, read:false}); renderNotifications(); }
+    function addToCart(pid, qty=1) { let p=products.find(x=>x.id==pid); if(p){ let existing=cart.find(i=>i.id==pid); if(existing) existing.qty+=qty; else cart.push({...p, qty}); updateCartCount(); addNoti(`${p.name} কার্টে যোগ হয়েছে`); alert("কার্টে যোগ হয়েছে!"); } }
+    function renderProducts(containerId, productArray) { let html=''; productArray.forEach(p=>{ html+=`<div class='product-card'><img src='${p.image}' onclick='viewProduct(${p.id})'><div class='product-name' onclick='viewProduct(${p.id})'>${p.name}</div><div class='price'>$${p.price}</div><div class='card-buttons'><button onclick='addToCart(${p.id},1)'>🛒 অ্যাড</button><button onclick='buyNow(${p.id})'>⚡ বাই নাও</button><button onclick='addToWishlist(${p.id})'>❤️</button><button onclick='shareProduct(${p.id})'>🔗 শেয়ার</button><button onclick='quickView(${p.id})'>👁️ কুইক ভিউ</button><button onclick='addToCompare(${p.id})'>🔄 তুলনা</button></div></div>`; }); document.getElementById(containerId).innerHTML=html; }
+    function viewProduct(id){ showPage('productDetailPage'); let p=products.find(x=>x.id==id); document.getElementById('productDetailContainer').innerHTML=`<h2>${p.name}</h2><img src='${p.image}' width='100%'><p>দাম: $${p.price}</p><button onclick='addToCart(${p.id},1)'>অ্যাড টু কার্ট</button> <button onclick='buyNow(${p.id})'>বাই নাও</button> <button onclick='shareProduct(${p.id})'>শেয়ার</button> <button onclick='visitStore("${p.storeId}")'>স্টোরে যান</button>`; }
+    function buyNow(id){ addToCart(id,1); showPage('checkoutPage'); renderCheckout(); }
+    function addToWishlist(id){ if(!wishlist.includes(id)){ wishlist.push(id); addNoti("উইশলিস্টে সেভ হয়েছে"); renderWishlist(); }else alert("আগেই আছে"); }
+    function shareProduct(id){ let link=`https://globalshop.com/product/${id}`; if(navigator.share) navigator.share({title:'পণ্য',url:link}); else prompt("লিংক কপি করুন",link); }
+    function quickView(id){ let p=products.find(x=>x.id==id); alert(`কুইক ভিউ: ${p.name} - $${p.price}`); }
+    function addToCompare(id){ if(!compareList.includes(id) && compareList.length<4) compareList.push(id); else alert("ম্যাক্স ৪টি"); renderCompare(); }
+    function renderWishlist(){ let items=products.filter(p=>wishlist.includes(p.id)); renderProducts('wishlistGrid',items); }
+    function renderCart(){ let items=cart; let html=''; let total=0; items.forEach(i=>{ total+=i.price*i.qty; html+=`<div>${i.name} x ${i.qty} = $${i.price*i.qty} <button onclick='changeQty(${i.id},1)'>+</button> <button onclick='changeQty(${i.id},-1)'>-</button> <button onclick='removeFromCart(${i.id})'>রিমুভ</button> <button onclick='saveForLater(${i.id})'>পরে সংরক্ষণ</button></div>`; }); document.getElementById('cartItemsList').innerHTML=html; document.getElementById('cartSummary').innerHTML=`মোট: $${total} <button id="applyCouponCartBtn2">কুপন প্রয়োগ</button>`; }
+    function changeQty(id,delta){ let item=cart.find(i=>i.id==id); if(item){ item.qty+=delta; if(item.qty<=0) removeFromCart(id); else updateCartCount(); renderCart(); } }
+    function removeFromCart(id){ cart=cart.filter(i=>i.id!=id); updateCartCount(); renderCart(); }
+    function saveForLater(id){ addToWishlist(id); removeFromCart(id); }
+    function renderCheckout(){ document.getElementById('addressSection').innerHTML=`<h4>ঠিকানা</h4><button id="addAddressBtn">ঠিকানা যোগ করুন</button><div id="addressList"></div>`; document.getElementById('paymentMethods').innerHTML=`<h4>পেমেন্ট</h4><button class="payMethod" data-method="bKash">bKash</button><button class="payMethod" data-method="Nagad">Nagad</button><button data-method="COD">ক্যাশ অন ডেলিভারি</button>`; }
+    function confirmOrder(){ let newOrder={id:Date.now(), items:cart, total:cart.reduce((s,i)=>s+i.price*i.qty,0), status:"Pending"}; orders.push(newOrder); cart=[]; updateCartCount(); saveData(); addNoti(`অর্ডার #${newOrder.id} কনফার্ম হয়েছে`); alert("অর্ডার প্লেসড!"); showPage('ordersPage'); renderOrders(); }
+    function renderOrders(){ let html=''; orders.forEach(o=>{ html+=`<div>অর্ডার আইডি: ${o.id} | মোট: $${o.total} | স্ট্যাটাস: ${o.status} <button onclick='trackOrder(${o.id})'>ট্র্যাক করুন</button> <button onclick='cancelOrder(${o.id})'>বাতিল করুন</button> <button onclick='returnRequest(${o.id})'>রিটার্ন রিকোয়েস্ট</button></div>`; }); document.getElementById('ordersList').innerHTML=html; }
+    function trackOrder(id){ let order=orders.find(o=>o.id==id); showPage('trackOrderPage'); document.getElementById('trackInfo').innerHTML=`অর্ডার ${id} ট্র্যাকিং: ${order.status} - শীঘ্রই আপডেট হবে`; }
+    function cancelOrder(id){ orders=orders.filter(o=>o.id!=id); addNoti(`অর্ডার #${id} বাতিল`); renderOrders(); }
+    function returnRequest(id){ alert(`রিটার্ন রিকোয়েস্ট ফর্ম খুলবে ${id}`); }
+    function renderNotifications(){ let html=''; notifications.forEach(n=>{ html+=`<div>${n.msg} ${!n.read?'<button onclick="markRead('+n.id+')">পড়া হয়েছে</button>':''} <button onclick="deleteNoti(${n.id})">ডিলিট</button></div>`; }); document.getElementById('notiList').innerHTML=html; }
+    function markRead(id){ let n=notifications.find(n=>n.id==id); if(n) n.read=true; renderNotifications(); }
+    function deleteNoti(id){ notifications=notifications.filter(n=>n.id!=id); renderNotifications(); }
+    function markAllRead(){ notifications.forEach(n=>n.read=true); renderNotifications(); }
+    function deleteAllNoti(){ notifications=[]; renderNotifications(); }
+    // ভয়েস সার্চ
+    function voiceSearch(){ let recognition=new (window.SpeechRecognition||window.webkitSpeechRecognition)(); recognition.lang='bn-BD'; recognition.start(); recognition.onresult=e=>{ document.getElementById('searchInput').value=e.results[0][0].transcript; performSearch(); }; }
+    function performSearch(){ let query=document.getElementById('searchInput').value.toLowerCase(); let filtered=products.filter(p=>p.name.toLowerCase().includes(query)); showPage('productListPage'); renderProducts('allProductsGrid',filtered); }
+    // ল্যাঙ্গুয়েজ চেঞ্জ ডেমো
+    function toggleLanguage(){ currentLang=currentLang=='bn'?'en':'bn'; alert(`ভাষা পরিবর্তন: ${currentLang==='bn'?'বাংলা':'English'} (ডেমো)`); }
+    // লগইন সিমুলেট
+    function doLogin(){ currentUser={name:"রাহিম"}; addNoti("লগইন সফল"); showPage('homePage'); }
+    function doSignup(){ alert("রেজিস্ট্রেশন সম্পন্ন"); showPage('loginPage'); }
+    function logout(){ currentUser=null; addNoti("লগ আউট"); showPage('homePage'); }
+
+    // ইভেন্ট লিসেনার (সব বাটন এখানে)
+    document.getElementById('logoBtn').onclick=()=>showPage('homePage');
+    document.getElementById('categoriesBtn').onclick=()=>{ document.getElementById('catDropdown').style.display='block'; setTimeout(()=>{document.getElementById('catDropdown').style.display='none';},3000); };
+    document.getElementById('searchBtn').onclick=performSearch;
+    document.getElementById('voiceSearchBtn').onclick=voiceSearch;
+    document.getElementById('languageBtn').onclick=toggleLanguage;
+    document.getElementById('loginBtn').onclick=()=>showPage('loginPage');
+    document.getElementById('signupBtn').onclick=()=>showPage('signupPage');
+    document.getElementById('wishlistNavBtn').onclick=()=>{ showPage('wishlistPage'); renderWishlist(); };
+    document.getElementById('notiNavBtn').onclick=()=>{ showPage('notificationsPage'); renderNotifications(); };
+    document.getElementById('myOrdersNavBtn').onclick=()=>{ showPage('ordersPage'); renderOrders(); };
+    document.getElementById('cartNavBtn').onclick=()=>{ showPage('cartPage'); renderCart(); };
+    document.getElementById('accountNavBtn').onclick=()=>showPage('accountPage');
+    document.getElementById('shopNowBannerBtn').onclick=()=>showPage('productListPage');
+    document.getElementById('viewAllProductsBtn').onclick=()=>{ showPage('productListPage'); renderProducts('allProductsGrid',products); };
+    document.getElementById('viewAllDealsBtn').onclick=()=>{ showPage('productListPage'); renderProducts('allProductsGrid',products.filter(p=>p.isFeatured)); };
+    document.getElementById('checkoutBtn').onclick=()=>{ showPage('checkoutPage'); renderCheckout(); };
+    document.getElementById('confirmOrderBtn').onclick=confirmOrder;
+    document.getElementById('backToCartBtn').onclick=()=>showPage('cartPage');
+    document.getElementById('continueShoppingBtn').onclick=()=>showPage('homePage');
+    document.getElementById('clearCartBtn').onclick=()=>{ cart=[]; updateCartCount(); renderCart(); };
+    document.getElementById('applyCouponCartBtn').onclick=()=>alert("কুপন SAVE10 প্রয়োগ (ডেমো)");
+    document.getElementById('doLoginBtn').onclick=doLogin;
+    document.getElementById('doSignupBtn').onclick=doSignup;
+    document.getElementById('logoutBtn').onclick=logout;
+    document.getElementById('markAllReadBtn').onclick=markAllRead;
+    document.getElementById('deleteAllNotiBtn').onclick=deleteAllNoti;
+    document.getElementById('selectAllWishlistBtn').onclick=()=>alert("সব সিলেক্ট ডেমো");
+    document.getElementById('deleteSelectedWishlistBtn').onclick=()=>{ wishlist=[]; renderWishlist(); };
+    document.getElementById('filterBtn').onclick=()=>alert("ফিল্টার প্যানেল খুলবে (দাম, ব্র্যান্ড)");
+    document.getElementById('clearFilterBtn').onclick=()=>{ filters={}; renderProducts('allProductsGrid',products); };
+    document.getElementById('sortSelect').onchange=(e)=>{ let val=e.target.value; let sorted=[...products]; if(val=='low-high') sorted.sort((a,b)=>a.price-b.price); else if(val=='high-low') sorted.sort((a,b)=>b.price-a.price); renderProducts('allProductsGrid',sorted); };
+    document.getElementById('seeMoreBtn').onclick=()=>alert("আরো পণ্য লোড হচ্ছে (ডেমো)");
+    document.getElementById('aboutUsBtn').onclick=()=>alert("Global Online Shop - আপনার বিশ্বস্ত ইকমার্স");
+    document.getElementById('contactUsBtn').onclick=()=>alert("ইমেইল: support@globalshop.com");
+    document.getElementById('privacyPolicyBtn').onclick=()=>alert("গোপনীয়তা নীতি...");
+    document.getElementById('termsBtn').onclick=()=>alert("শর্তাবলী...");
+    document.getElementById('returnPolicyBtn').onclick=()=>alert("৩০ দিনে ফেরত নীতি");
+    document.getElementById('faqBtn').onclick=()=>alert("প্রশ্নোত্তর দেখুন");
+    document.getElementById('liveChatSupportBtn').onclick=()=>alert("লাইভ চ্যাট সাপোর্ট খোলা হচ্ছে");
+    document.getElementById('fbBtn').onclick=()=>window.open('https://facebook.com');
+    document.getElementById('ytBtn').onclick=()=>window.open('https://youtube.com');
+    document.getElementById('waBtn').onclick=()=>alert("WhatsApp চ্যাট +880123456789");
+    // মোবাইল মেনু
+    document.getElementById('mobileHomeBtn').onclick=()=>showPage('homePage');
+    document.getElementById('mobileCatBtn').onclick=()=>alert("ক্যাটাগরি লিস্ট");
+    document.getElementById('mobileSearchBtn').onclick=()=>document.getElementById('searchInput').focus();
+    document.getElementById('mobileCartBtn').onclick=()=>showPage('cartPage');
+    document.getElementById('mobileAccountBtn').onclick=()=>showPage('accountPage');
+    // ক্যাটাগরি ফিল্টার লিংক
+    document.querySelectorAll('#catDropdown a[data-cat]').forEach(link=>{ link.onclick=(e)=>{ let cat=e.target.getAttribute('data-cat'); let filtered=products.filter(p=>p.category==cat); showPage('productListPage'); renderProducts('allProductsGrid',filtered); }; });
+    document.getElementById('moreCategoriesLink').onclick=()=>alert("আরও ক্যাটাগরি: টয়, অটোমোটিভ ইত্যাদি");
+    // প্রাথমিক ডেমো রেন্ডার
+    function initHomeGrids(){ renderProducts('flashSaleGrid',products.slice(0,3)); renderProducts('todaysDealsGrid',products.filter(p=>p.isFeatured)); renderProducts('bestSellersGrid',products.filter(p=>p.isBestSeller)); renderProducts('newArrivalsGrid',products.filter(p=>p.isNew)); renderProducts('featuredGrid',products.filter(p=>p.isFeatured)); renderProducts('recommendedGrid',products.slice(0,4)); }
+    loadData(); initHomeGrids();
+    window.viewProduct=viewProduct; window.addToCart=addToCart; window.buyNow=buyNow; window.addToWishlist=addToWishlist; window.shareProduct=shareProduct; window.quickView=quickView; window.addToCompare=addToCompare; window.changeQty=changeQty; window.removeFromCart=removeFromCart; window.saveForLater=saveForLater; window.trackOrder=trackOrder; window.cancelOrder=cancelOrder; window.returnRequest=returnRequest; window.markRead=markRead; window.deleteNoti=deleteNoti; window.visitStore=(sid)=>alert("স্টোর পেজ খুলবে");
 </script>
 </body>
 </html>
